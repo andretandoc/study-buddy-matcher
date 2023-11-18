@@ -2,9 +2,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../services/firebase";
-import { getRandomUsers } from "../../services/matching";
-import { likeUser, dislikeUser } from "../../services/likeActions";
-import { db } from "../../services/firebase";
+import {
+  getRandomUsers,
+  likeUser,
+  dislikeUser,
+  haveMutualLike,
+} from "../../services/matching";
 
 function Matching() {
   const [user, setUser] = useState("");
@@ -46,6 +49,17 @@ function Matching() {
   const handleLike = async (likedUserId) => {
     try {
       await likeUser(user.uid, likedUserId);
+
+      // Check if the liked user has also liked the current user
+      console.log(user.uid);
+      console.log(likedUserId);
+      const mutualLike = await haveMutualLike(user.uid, likedUserId);
+      console.log(mutualLike);
+      if (mutualLike) {
+        // Show a popup or perform any action for a mutual like
+        alert("Mutual Like! You and the user have liked each other!");
+      }
+
       // You can perform additional actions if needed, such as updating UI, fetching new users, etc.
     } catch (error) {
       console.error("Error handling like:", error);

@@ -142,6 +142,10 @@ const updateUserDetails = async (uid, userDetails) => {
   }
 };
 
+const logout = () => {
+  signOut(auth);
+};
+
 export {
   auth,
   db,
@@ -150,7 +154,7 @@ export {
   logInWithEmailAndPassword,
   registerWithEmailAndPassword,
   sendPasswordReset,
-  logOut,
+  logout,
   fetchUserDetails,
   updateUserDetails,
 };

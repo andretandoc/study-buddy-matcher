@@ -16,6 +16,8 @@ import {
   Timestamp,
 } from "firebase/firestore";
 
+const likesCollection = collection(db, "likes");
+
 const getRandomUsers = async (count, uid) => {
   try {
     const usersRef = collection(db, "users");
@@ -44,11 +46,10 @@ const getRandomUsers = async (count, uid) => {
 
 const likeUser = async (likerUid, likedUserId) => {
   try {
-    const likesCollection = collection(db, "likes");
-
     // Create a document in the 'likes' collection representing the like
     await setDoc(doc(likesCollection, `${likerUid}_${likedUserId}`), {
       likedUserId,
+      likerUid,
       likedAt: new Date(),
     });
 
@@ -61,8 +62,6 @@ const likeUser = async (likerUid, likedUserId) => {
 
 const dislikeUser = async (dislikerUid, dislikedUserId) => {
   try {
-    const likesCollection = collection(db, "likes");
-
     // Delete the document in the 'likes' collection representing the dislike
     await deleteDoc(doc(likesCollection, `${dislikerUid}_${dislikedUserId}`));
 
@@ -73,4 +72,43 @@ const dislikeUser = async (dislikerUid, dislikedUserId) => {
   }
 };
 
-export { likeUser, dislikeUser, getRandomUsers };
+const haveMutualLike = async (user1Uid, user2Uid) => {
+  try {
+    const user1LikedUser2 = await checkLike(user1Uid, user2Uid);
+    const user2LikedUser1 = await checkLike(user2Uid, user1Uid);
+
+    return user1LikedUser2 && user2LikedUser1;
+  } catch (error) {
+    console.error("Error checking mutual like:", error);
+    throw error;
+  }
+};
+
+const checkLike = async (likerUid, likedUserId) => {
+  try {
+    // Check if likerUid likes likedUserId
+    const q1 = query(
+      likesCollection,
+      where("likedUserId", "==", likedUserId),
+      where("likerUid", "==", likerUid)
+    );
+
+    const querySnapshot1 = await getDocs(q1);
+
+    // Check if likedUserId likes likerUid
+    const q2 = query(
+      likesCollection,
+      where("likedUserId", "==", likerUid),
+      where("likerUid", "==", likedUserId)
+    );
+
+    const querySnapshot2 = await getDocs(q2);
+
+    return !querySnapshot1.empty && !querySnapshot2.empty;
+  } catch (error) {
+    console.error("Error checking like:", error);
+    throw error;
+  }
+};
+
+export { haveMutualLike, checkLike, likeUser, dislikeUser, getRandomUsers };
