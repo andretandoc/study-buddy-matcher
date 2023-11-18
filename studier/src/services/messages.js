@@ -24,6 +24,24 @@ const createChat = async (user1Uid, user2Uid) => {
   }
 };
 
+const getChats = async (currentUserUid) => {
+  try {
+    const chatsQuery = query(
+      chatsCollection,
+      where("users", "array-contains", currentUserUid)
+    );
+    const chatsSnapshot = await getDocs(chatsQuery);
+    const chatsData = chatsSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    return chatsData;
+  } catch (error) {
+    console.error("Error fetching chats:", error);
+    throw error;
+  }
+};
+
 const getChatMessages = async (currentUserUid, matchUid) => {
   try {
     const chatRef = doc(chatsCollection, `${currentUserUid}_${matchUid}`);
@@ -53,4 +71,4 @@ const addChatMessage = async (currentUserUid, matchUid, newMessage) => {
   }
 };
 
-export { createChat, getChatMessages, addChatMessage };
+export { createChat, getChats, getChatMessages, addChatMessage };

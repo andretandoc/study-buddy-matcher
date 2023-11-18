@@ -5,7 +5,6 @@ import {
   getChatMessages,
   addChatMessage,
 } from "../../services/messages";
-
 const Messages = ({ currentUserUid, matchUid }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
@@ -26,27 +25,23 @@ const Messages = ({ currentUserUid, matchUid }) => {
   const sendMessage = async () => {
     if (newMessage.trim() === "") return;
 
+    // Update local state immediately
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      {
+        senderUid: currentUserUid,
+        text: newMessage,
+      },
+    ]);
+
     try {
+      // Add the message to the database
       await addChatMessage(currentUserUid, matchUid, newMessage);
-      setNewMessage("");
+      setNewMessage(""); // Clear the input field after sending
     } catch (error) {
       console.error("Error sending message:", error);
     }
   };
-
-  useEffect(() => {
-    // const checkAndCreateChat = async () => {
-    //   try {
-    //     const mutualLike = await haveMutualLike(currentUserUid, matchUid);
-    //     if (mutualLike) {
-    //       await createChat(currentUserUid, matchUid);
-    //     }
-    //   } catch (error) {
-    //     console.error("Error checking mutual like and creating chat:", error);
-    //   }
-    // };
-    // checkAndCreateChat();
-  }, [currentUserUid, matchUid]);
 
   return (
     <div>
