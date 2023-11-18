@@ -16,6 +16,8 @@ function Signin() {
   const [isSignIn, setIsSignIn] = useState(true);
   const [user, setUser] = useState(null); // To store the authenticated user
   const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useState("");
+
 
   useEffect(() => {
     // Firebase Auth state observer
