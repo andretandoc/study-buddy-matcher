@@ -40,7 +40,7 @@ const Navbar = () => {
           <Link to="/" className="navbar-logo">
             <Logo />
           </Link>
-          <Link to="/account" className="navbar-link">
+          <Link to="/accounts" className="navbar-link">
             Account
           </Link>
           <Link to="/match" className="navbar-link">

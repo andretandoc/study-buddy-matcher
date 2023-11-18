@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../../services/firebase";
+import { auth,db } from "../../services/firebase";
 import "./Accounts.css";
+import { setDoc } from "firebase/firestore";
 
 function Accounts() {
   const [userId, setUserId] = useState("");
@@ -10,8 +11,8 @@ function Accounts() {
   const [image, setImage] = useState("");
   const [major, setMajor] = useState("");
   const [yearOfStudy, setYearOfStudy] = useState(0);
-  const [currentCourses, setCurrentCourses] = useState("");
-  const [pastCourses, setPastCourses] = useState("");
+  const [currentCourses, setCurrentCourses] = useState([]);
+  const [pastCourses, setPastCourses] = useState([]);
   const [user, setUser] = useState(null); // To store the authenticated user
   const navigate = useNavigate();
 
@@ -20,7 +21,6 @@ function Accounts() {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         setUser(user);
-        setUserId(user);
       } else {
         // Redirect to the root path if there's no signed-in user
         navigate("/");
@@ -31,7 +31,10 @@ function Accounts() {
   useEffect(() => {
     // Firebase Auth state observer
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user && user.info_id != "") {
+      const userInformationCollection = collection(db,'user_information');
+      const q = query(userInformationCollection, where("uid", "==", auth.uid));
+      const querySnapshot = getDocs(q);
+      if (!querySnapshot.empty) {
         setName(auth.name);
         setDescription(auth.description);
         setImage(auth.image);
@@ -39,69 +42,70 @@ function Accounts() {
         setYearOfStudy(auth.yearOfStudy);
         setCurrentCourses(auth.setCurrentCourses);
         setPastCourses(auth.setPastCourses);
+      }else{
+        addDoc(collection(db, "user_information"), {
+          uid: auth.uid,
+          name: "",
+          major: "",
+          description: "",
+          image: "",
+          yearOfStudy: 0,
+          currentCourses: [],
+          pastCourses: []
+        });
       }
     });
   }, [user]);
 
   return (
     <div className="AccountInfoContainer">
+      <form>
       <div>
-        <label>Image Figure out later</label>
-        <input
-          type="name"
-          value={image}
-          onChange={(e) => setImage(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>Name</label>
-        <input
-          type="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>Major</label>
-        <input
-          type="name"
-          value={major}
-          onChange={(e) => setMajor(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>Year Of Study</label>
-        <input
-          type="name"
-          value={yearOfStudy}
-          onChange={(e) => setYearOfStudy(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>Current Courses</label>
-        <input
-          type="name"
-          value={currentCourses}
-          onChange={(e) => setCurrentCourses(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>Past Courses</label>
-        <input
-          type="name"
-          value={pastCourses}
-          onChange={(e) => setPastCourses(e.target.value)}
-        />
-      </div>
-
-      <div>
-        <label>Description</label>
-        <input
-          type="name"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-      </div>
+            <label>Name</label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+        </div>
+        <div>
+            <label>Major</label>
+            <input
+              type="text"
+              value={major}
+              onChange={(e) => setMajor(e.target.value)}
+            />
+        </div>
+        <div>
+            <label>Description</label>
+            <input
+              type="text"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+        </div>
+        <div>
+            <label>yearOfStudy</label>
+            <input
+              type="number"
+              value={yearOfStudy}
+              onChange={(e) => setYearOfStudy(e.target.value)}
+            />
+        </div>
+        <div>
+            <label>Image</label>
+            <input
+              type="image"
+              value={image}
+              onChange={(e) => setImage(e.target.value)}
+            />
+        </div>
+        <div>
+          <button type="button" onClick={updateUserInfo}>
+            Sign In with Google
+          </button>
+        </div>
+      </form>
     </div>
   );
 }
