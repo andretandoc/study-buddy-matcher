@@ -33,11 +33,9 @@ const Navbar = () => {
           <button className="menu-button" onClick={toggleMenu}>
             Menu
           </button>
-          {!isMenuOpen && (
-            <button className="reopen-button" onClick={openMenu}>
-              Reopen Menu
-            </button>
-          )}
+          <button className="reopen-button" onClick={openMenu}>
+            Reopen Menu
+          </button>
         </div>
 
         <div className={`navbar-links ${isMenuOpen ? "open" : ""}`}>

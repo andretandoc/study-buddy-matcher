@@ -9,6 +9,7 @@ import Signin from "./components/Signin/Signin";
 import Navbar from "./components/Navbar/Navbar";
 import Matching from "./components/Matching/Matching.js";
 import Messages from "./components/Messages/Messages.js";
+import ProfileCard from "./components/Matching/ProfileCard/ProfileCard.js";
 
 const App = () => {
   const [user, loading, error] = useAuthState(auth);
@@ -22,6 +23,7 @@ const App = () => {
             <Route exact path="/" element={<Signin />} />
             <Route exact path="/match" element={<Matching />} />
             <Route exact path="/messages" element={<Messages />} />
+            <Route exact path="/profile" element={<ProfileCard />} />
           </Routes>
         </Router>
       </div>
