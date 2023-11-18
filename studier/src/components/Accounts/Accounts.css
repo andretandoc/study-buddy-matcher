@@ -1,0 +1,8 @@
+.AccountInfoContainer {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    height: 100vh;
+    background-color: #7ad2f5;
+    /* Use the background color from your palette */
+}

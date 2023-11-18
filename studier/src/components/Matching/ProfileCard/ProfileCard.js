@@ -5,14 +5,14 @@ import "./ProfileCard.css";
 
 const ProfileCard = ({ userData, isActive, onLike, onDislike }) => {
   const {
-    name,
-    pastCourses,
-    yearOfStudy,
-    description,
-    currentCourses,
-    major,
-    uid,
-    image,
+    name = "",
+    pastCourses = [],
+    yearOfStudy = "",
+    description = "",
+    currentCourses = [],
+    major = "",
+    uid = "",
+    image = "",
   } = userData;
 
   return (
