@@ -35,6 +35,9 @@ function Accounts() {
         navigate("/");
       }
     });
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   useEffect(() => {
@@ -64,7 +67,10 @@ function Accounts() {
         });
       }
     });
-  }, [user]);
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   return (
     <div className="AccountInfoContainer">
