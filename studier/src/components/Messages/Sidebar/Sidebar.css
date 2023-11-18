@@ -1,0 +1,30 @@
+/* Sidebar.css */
+
+.sidebar-container {
+    height: 100%;
+    width: 20%;
+    /* Adjust the width as needed */
+    background-color: #f7f7f7;
+    /* Neutral color */
+    color: #000;
+    border-right: 1px solid #ddd;
+    /* Add a border */
+    overflow-y: auto;
+    /* Enable vertical scrolling */
+    padding: 10px;
+}
+
+.chat-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.chat-list li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.chat-list li:hover {
+    background-color: #ebebeb;
+}

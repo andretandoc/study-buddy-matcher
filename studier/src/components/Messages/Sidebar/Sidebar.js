@@ -1,6 +1,7 @@
 // Sidebar.js
 import React, { useState, useEffect } from "react";
 import { getChats, getChatUsers } from "../../../services/messages";
+import "./Sidebar.css"; // Import a CSS file for styling
 
 const Sidebar = ({ currentUserUid, onChatSelect }) => {
   const [chats, setChats] = useState([]);
@@ -25,9 +26,9 @@ const Sidebar = ({ currentUserUid, onChatSelect }) => {
   }, [currentUserUid]);
 
   return (
-    <div style={{ border: "3px solid black" }}>
+    <div className="sidebar-container">
       <h2>Your Chats</h2>
-      <ul>
+      <ul className="chat-list">
         {chats.map((chat) => (
           <li key={chat.id} onClick={() => onChatSelect(chat.otherUserUid)}>
             {chat.otherUserUid}{" "}

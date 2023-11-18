@@ -62,7 +62,9 @@ const Messages = ({ currentUserUid, matchUid }) => {
           onKeyDown={handleKeyPress} // Handle keypress event
           placeholder="Type your message..."
         />
-        <button onClick={sendMessage}>Send</button>
+        <button className="send-button" onClick={sendMessage}>
+          Send
+        </button>
       </div>
     </div>
   );

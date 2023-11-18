@@ -1,0 +1,17 @@
+/* ChatPage.css */
+
+.chat-page-container {
+    display: flex;
+}
+
+/* Adjust the width of the Sidebar as needed */
+.sidebar-container {
+    width: 20%;
+    /* Add other styles as needed */
+}
+
+/* Adjust the width of the Messages container as needed */
+.messages-container {
+    width: 80%;
+    /* Add other styles as needed */
+}

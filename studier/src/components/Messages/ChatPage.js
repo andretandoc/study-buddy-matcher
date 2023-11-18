@@ -2,18 +2,17 @@
 import React, { useState, useEffect } from "react";
 import Messages from "./Messages";
 import Sidebar from "./Sidebar/Sidebar";
+import "./ChatPage.css"; // Import a new CSS file for styling
 
 const ChatPage = ({ currentUserUid }) => {
   const [selectedChatUid, setSelectedChatUid] = useState(null);
-  // const [otherUserUid, setOtherUserUid] = useState(null);
 
   const handleChatSelect = (chatId, otherUserUid) => {
     setSelectedChatUid(chatId);
-    // setOtherUserUid(otherUserUid);
   };
 
   return (
-    <div>
+    <div className="chat-page-container">
       <Sidebar
         currentUserUid={currentUserUid}
         onChatSelect={handleChatSelect}

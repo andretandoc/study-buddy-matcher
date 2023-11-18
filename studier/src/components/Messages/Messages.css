@@ -1,133 +1,118 @@
+/* Messages.css */
+
 .messages-container {
-  height: 85%;
-  display: flex;
-  flex-direction: column;
-  /* Change to column to stack messages and input-container */
-  position: fixed;
-  /* Position fixed to be relative to the viewport */
-  left: 12%;
-  /* Adjust this if your navbar width changes */
-  width: 88%;
-  /* Adjust this value to fill the rest of the space beside the navbar */
-  justify-content: flex-end;
-  /* This will put the input-container at the bottom */
+  max-width: 1400px;
+  /*   margin: 0 auto;
+  padding: 20px;*/
+  /* align-items: center; */
+  /* max-height: 90vh; */
+  background-color: #EDF2F4;
+  /* justify-content: center;
+  align-content: center;
+  display: flex; */
+  border: 4px solid black;
+  border-radius: 20px;
+
 }
 
-
-.sidebar {
-  height: 100vh;
-  width: 20%;
-  /* Make it slimmer */
-  background-color: #f7f7f7;
-  /* Neutral color */
-  color: #000;
-  border-right: 1px solid #ddd;
-  /* Add a border */
-}
-
-.chat-list {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  overflow-y: auto;
-  height: calc(100vh - 50px);
-  /* Adjust height for header/footer */
-}
-
-.chat-list-item {
-  padding: 10px;
-  cursor: pointer;
-}
-
-.chat-list-item:hover {
-  background-color: #ebebeb;
-}
 
 .messages {
   flex: 1;
-  /* Allows messages to fill the available space above the input-container */
   overflow-y: auto;
-  /* Makes sure the messages are scrollable */
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 10px;
-  /* Adjust padding as necessary */
-}
 
+  margin: 10px;
+  max-height: 90vh;
+  padding: 10px;
+  border-radius: 20px;
+
+}
 
 .message {
   max-width: 60%;
-  padding: 10px;
+  padding: 15px;
   border-radius: 18px;
   position: relative;
-  font-size: 14px;
+  font-size: 20px;
   line-height: 18px;
   margin-bottom: 10px;
+  margin-left: 5px;
 }
 
 .right,
 .message.sent {
   align-self: flex-end;
-  background-color: #0084ff;
-  /* Messenger Blue */
-  color: white;
+  background-color: #ef233c;
+  /* Red */
+  color: #edf2f4;
+  /* White */
+  text-align: justify;
+  line-height: 24px;
+  /* Increase the line-height for more spacing between lines */
 }
 
 .left,
 .message.received {
   align-self: flex-start;
-  background-color: #f0f0f0;
-  /* Light grey */
-  color: black;
+  background-color: #2b2d42;
+  /* Dark Blue */
+  color: #edf2f4;
+  text-align: justify;
 }
 
 .input-container {
-  height: 10%;
+  border-radius: 20px;
   display: flex;
-  align-items: bottom;
+  align-items: center;
   gap: 8px;
   padding: 10px;
-  background-color: #f0f0f0;
-  /* Light grey background */
+  background-color: #edf2f4;
+  /* Main background color */
+  border-top: 1px solid #8d99ae;
 }
 
 .text-field {
-  width: 100%;
-  height: 100%;
-}
+  flex: 1;
+  height: 30px;
+  border: 1px solid #8d99ae;
+  font-size: 20px;
+  border-radius: 4px;
 
-.message-input {
-  height: 10%;
-  width: 85%;
-  flex-grow: 1;
-  /* Make input grow to fill space */
-  padding: 10px;
-  border: 1px solid #ddd;
-  /* Slightly defined border */
-  border-radius: 18px;
-  margin: 0;
-  /* Remove margin to fit better in the container */
-  outline: none;
 }
 
 .send-button {
-  background-color: #0084ff;
-  /* Messenger Blue */
-  color: #fff;
+  background-color: #ef233c;
+  /* Red */
+  color: #edf2f4;
+  /* White */
   padding: 10px 20px;
   border: none;
   border-radius: 18px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 90px;
+
 }
 
 .send-button:hover {
-  background-color: #005ecb;
+  background-color: #d90429;
+  /* Darker Red */
 }
 
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* Additional styles for scrollbar */
+.messages::-webkit-scrollbar {
+  width: 8px;
+}
+
+.messages::-webkit-scrollbar-thumb {
+  background-color: #2b2d42;
+  /* Dark Blue */
+  border-radius: 8px;
+}
+
+.messages::-webkit-scrollbar-track {
+  background-color: #edf2f4;
+  /* Main background color */
 }
