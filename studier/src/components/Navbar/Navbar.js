@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { logout } from "../../services/firebase";
 
 const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(true);
   const navigate = useNavigate();
 
   const handleSignOut = () => {
@@ -33,9 +33,9 @@ const Navbar = () => {
           <button className="menu-button" onClick={toggleMenu}>
             Menu
           </button>
-          <button className="reopen-button" onClick={openMenu}>
+          {/* <button className="reopen-button" onClick={openMenu}>
             Reopen Menu
-          </button>
+          </button> */}
         </div>
 
         <div className={`navbar-links ${isMenuOpen ? "open" : ""}`}>
