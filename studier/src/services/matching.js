@@ -91,7 +91,10 @@ const haveMutualLike = async (user1Uid, user2Uid) => {
     // const user2LikedUser1 = await checkLike(user2Uid, user1Uid);
     if (user1LikedUser2) {
       // Create a chat document with a unique identifier for the matched users
-      const chatId = `${user1Uid}_${user2Uid}`;
+      const chatId =
+        user1Uid < user2Uid
+          ? `${user1Uid}_${user2Uid}`
+          : `${user2Uid}_${user1Uid}`;
       await setDoc(doc(chatsCollection, chatId), {
         users: [user1Uid, user2Uid],
       });
