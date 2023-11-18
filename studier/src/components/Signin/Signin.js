@@ -22,7 +22,7 @@ function Signin() {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         setUser(user);
-        navigate("/matching");
+        navigate("/match");
       } else {
         // Redirect to the root path if there's no signed-in user
         navigate("/");
