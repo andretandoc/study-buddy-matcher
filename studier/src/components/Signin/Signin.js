@@ -8,6 +8,7 @@ import {
   auth,
 } from "../../services/firebase";
 import "./Signin.css";
+import Logo from "../Navbar/Logo";
 
 function Signin() {
   const [email, setEmail] = useState("");
@@ -17,7 +18,7 @@ function Signin() {
   const [user, setUser] = useState(null); // To store the authenticated user
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState("");
-
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
 
   useEffect(() => {
     // Firebase Auth state observer
@@ -59,9 +60,10 @@ function Signin() {
 
   return (
     <div className="SigninContainer">
+      <Logo className="logo" />
       <h2>{isSignIn ? "Sign In" : "Sign Up"}</h2>
       <form>
-        {!isSignIn && (
+        {/* {!isSignIn && (
           <div>
             <label>Display Name</label>
             <input
@@ -70,30 +72,41 @@ function Signin() {
               onChange={(e) => setDisplayName(e.target.value)}
             />
           </div>
-        )}
+        )} */}
         <div>
-          <label>Email</label>
+          {/* <label>Email</label> */}
           <input
+            className="input"
             type="email"
+            placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div>
-          <label>Password</label>
           <input
+            className="input"
             type="password"
+            placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         {isSignIn ? (
           <>
-            <button type="button" onClick={handleSignInWithGoogle}>
-              Sign In with Google
-            </button>
-            <button type="button" onClick={handleSignInWithEmailAndPassword}>
+            <button
+              type="button"
+              className="signin"
+              onClick={handleSignInWithEmailAndPassword}
+            >
               Sign In
+            </button>
+            <button
+              type="button"
+              className="google"
+              onClick={handleSignInWithGoogle}
+            >
+              Sign In with Google
             </button>
             <p>
               Don't have an account?{" "}
@@ -111,9 +124,30 @@ function Signin() {
             </p>
           </>
         )}
-        <button type="button" onClick={handlePasswordReset}>
+
+        <button type="button" onClick={() => setShowForgotPassword(true)}>
           Forgot Password?
         </button>
+
+        {showForgotPassword && (
+          <div className="ForgotPasswordPopup">
+            <h2>Forgot Password</h2>
+            <p>Enter your email to reset your password</p>
+            <input
+              type="email"
+              value={email}
+              className="input"
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
+            />
+            <button type="button" onClick={handlePasswordReset}>
+              Reset Password
+            </button>
+            <button type="button" onClick={() => setShowForgotPassword(false)}>
+              Cancel
+            </button>
+          </div>
+        )}
       </form>
     </div>
   );

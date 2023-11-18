@@ -1,6 +1,78 @@
+/* Signin.css */
+
 .SigninContainer {
     position: relative;
-    max-height: 90%;
-    height: 90%;
+    max-height: 100vh;
+    height: 100vh;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #edf2f4;
+}
+
+h2 {
+    color: #2b2d42;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin-top: 20px;
+}
+
+label {
+    color: #2b2d42;
+}
+
+input {
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #8d99ae;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 106%;
+}
+
+
+button:hover {
+    opacity: 0.8;
+}
+
+button[type="button"] {
+    background-color: #ef233c;
+    color: #edf2f4;
+}
+
+/* Color for the "Sign Up" or "Sign In" link */
+span {
+    color: #D90429;
+    cursor: pointer;
+}
+
+/* Additional styles for the "Forgot Password?" link */
+button[type="button"]:last-child {
+    background-color: transparent;
+    color: #2b2d42;
+    text-decoration: underline;
+}
+
+/* Additional styles for your logo component */
+.logo {
+    margin-top: 20px;
+    max-width: 100%;
+    height: auto;
+}
+
+.input {
+    width: 100%;
 }
