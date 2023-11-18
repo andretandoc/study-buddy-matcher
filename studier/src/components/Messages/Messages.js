@@ -54,7 +54,7 @@ const Messages = ({ currentUserUid, matchUid }) => {
         ))}
       </div>
       <div className="input-container">
-        <input
+        <input className="text-field"
           type="text"
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
