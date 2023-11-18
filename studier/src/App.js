@@ -29,7 +29,7 @@ const App = () => {
             <Route exact path="/match" element={<Matching />} />
             <Route exact path="/messages" element={<Messages />} />
             <Route exact path="/profile" element={<ProfileCard />} />
-            <Route exact path="/account" element={<Accounts />} />
+            <Route exact path="/accounts" element={<Accounts />} />
           </Routes>
         </div>
       </Router>
