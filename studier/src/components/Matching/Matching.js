@@ -10,9 +10,9 @@ function Matching() {
 
   useEffect(() => {
     // Firebase Auth state observer
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUser(user);
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        setUser(authUser);
       } else {
         // Redirect to the root path if there's no signed-in user
         navigate("/");
@@ -22,15 +22,17 @@ function Matching() {
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
     // Function to fetch randomized users
     const fetchRandomUsers = async () => {
       try {
-        console.log(user.uid);
-        const randomizedUsers = await getRandomUsers(5, user.uid);
-        setUsers(randomizedUsers);
+        if (user && user.uid) {
+          console.log(user.uid);
+          const randomizedUsers = await getRandomUsers(5, user.uid);
+          setUsers(randomizedUsers);
+        }
       } catch (error) {
         console.error("Error fetching randomized users:", error);
       }

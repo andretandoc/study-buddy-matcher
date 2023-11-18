@@ -18,7 +18,7 @@ import {
 const getRandomUsers = async (count, uid) => {
   try {
     const usersRef = collection(db, "users");
-    const q = query(usersRef, where("userId", "!=", uid));
+    const q = query(usersRef, where("userId", "==", uid));
 
     const usersSnapshot = await getDocs(q);
 
