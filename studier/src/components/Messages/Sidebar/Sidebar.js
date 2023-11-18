@@ -8,14 +8,14 @@ const Sidebar = ({ currentUserUid, onChatSelect }) => {
   useEffect(() => {
     const fetchChats = async () => {
       try {
-        let userChats = await getChats(currentUserUid);
+        const userChats = await getChats(currentUserUid);
 
-        // Iterate over each sub-array and filter out currentUserUid
-        userChats = userChats.map((chatArray) =>
-          chatArray.filter((chat) => chat !== currentUserUid)
-        );
-
-        setChats(userChats);
+        // Iterate over each chat object and find the other user's UID
+        const filteredChats = userChats.map((chat) => {
+          const otherUserUid = chat.users.find((uid) => uid !== currentUserUid);
+          return { id: chat.id, otherUserUid };
+        });
+        setChats(filteredChats);
       } catch (error) {
         console.error("Error fetching chats:", error);
       }
@@ -29,9 +29,8 @@ const Sidebar = ({ currentUserUid, onChatSelect }) => {
       <h2>Your Chats</h2>
       <ul>
         {chats.map((chat) => (
-          <li key={chat.id} onClick={() => onChatSelect(chat.users[1])}>
-            {chat.users[1]}{" "}
-            {/* Assuming users[1] is the UID of the other user */}
+          <li key={chat.id} onClick={() => onChatSelect(chat.otherUserUid)}>
+            {chat.otherUserUid}{" "}
           </li>
         ))}
       </ul>

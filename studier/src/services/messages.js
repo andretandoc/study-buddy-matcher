@@ -47,8 +47,9 @@ const getChats = async (currentUserUid) => {
     throw error;
   }
 };
-const getChatMessages = async (chatId) => {
+const getChatMessages = async (cur, other) => {
   try {
+    const chatId = cur < other ? `${cur}_${other}` : `${other}_${cur}`;
     const chatRef = doc(chatsCollection, chatId);
     const messagesQuery = query(
       collection(chatRef, "messages"),

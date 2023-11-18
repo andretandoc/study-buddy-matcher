@@ -14,6 +14,7 @@ const Messages = ({ currentUserUid, matchUid }) => {
     const getMessages = async () => {
       try {
         const chatMessages = await getChatMessages(currentUserUid, matchUid);
+        console.log(chatMessages);
         setMessages(chatMessages);
       } catch (error) {
         console.error("Error fetching messages:", error);
