@@ -2,7 +2,16 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth,db } from "../../services/firebase";
 import "./Accounts.css";
-import { setDoc } from "firebase/firestore";
+import { getFirestore,
+  query,
+  getDocs,
+  collection,
+  where,
+  addDoc,
+  doc,
+  getDoc,
+  updateDoc,} from "firebase/firestore";
+import {updateUserInfo} from "../../services/account"
 
 function Accounts() {
   const [userId, setUserId] = useState("");
@@ -32,19 +41,19 @@ function Accounts() {
     // Firebase Auth state observer
     const unsubscribe = auth.onAuthStateChanged((user) => {
       const userInformationCollection = collection(db,'user_information');
-      const q = query(userInformationCollection, where("uid", "==", auth.uid));
+      const q = query(userInformationCollection, where("uid", "==", user.uid));
       const querySnapshot = getDocs(q);
       if (!querySnapshot.empty) {
-        setName(auth.name);
-        setDescription(auth.description);
-        setImage(auth.image);
-        setMajor(auth.major);
-        setYearOfStudy(auth.yearOfStudy);
-        setCurrentCourses(auth.setCurrentCourses);
-        setPastCourses(auth.setPastCourses);
+        setName(user.name);
+        setDescription(user.description);
+        setImage(user.image);
+        setMajor(user.major);
+        setYearOfStudy(user.yearOfStudy);
+        setCurrentCourses(user.setCurrentCourses);
+        setPastCourses(user.setPastCourses);
       }else{
         addDoc(collection(db, "user_information"), {
-          uid: auth.uid,
+          uid: user.uid,
           name: "",
           major: "",
           description: "",
@@ -102,7 +111,7 @@ function Accounts() {
         </div>
         <div>
           <button type="button" onClick={updateUserInfo}>
-            Sign In with Google
+            Save
           </button>
         </div>
       </form>

@@ -14,3 +14,22 @@ import {
   orderBy,
   Timestamp,
 } from "firebase/firestore";
+
+
+
+
+
+
+
+
+const updateUserInfo = (uid,name,description,image,major,yearsOfStudy) => {
+    console.log("hi");
+
+
+}
+
+
+export {
+    
+  updateUserInfo
+};
