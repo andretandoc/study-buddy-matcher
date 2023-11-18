@@ -8,7 +8,13 @@ const Sidebar = ({ currentUserUid, onChatSelect }) => {
   useEffect(() => {
     const fetchChats = async () => {
       try {
-        const userChats = await getChats(currentUserUid);
+        let userChats = await getChats(currentUserUid);
+
+        // Iterate over each sub-array and filter out currentUserUid
+        userChats = userChats.map((chatArray) =>
+          chatArray.filter((chat) => chat !== currentUserUid)
+        );
+
         setChats(userChats);
       } catch (error) {
         console.error("Error fetching chats:", error);
