@@ -64,7 +64,11 @@ const getChatMessages = async (chatId) => {
 
 const addChatMessage = async (currentUserUid, matchUid, newMessage) => {
   try {
-    const chatRef = doc(chatsCollection, `${currentUserUid}_${matchUid}`);
+    const chatId =
+      currentUserUid < matchUid
+        ? `${currentUserUid}_${matchUid}`
+        : `${matchUid}_${currentUserUid}`;
+    const chatRef = doc(chatsCollection, chatId);
     await addDoc(collection(chatRef, "messages"), {
       text: newMessage,
       senderUid: currentUserUid,
