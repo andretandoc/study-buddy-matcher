@@ -1,26 +1,46 @@
 // Navbar.js
 
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css"; // Import your custom styles
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../services/firebase";
 
 const Navbar = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleSignOut = () => {
     logout(); // Call the logout function to sign the user out
     navigate("/");
   };
-  return (
-    <nav className="navbar">
-      <div className="navbar-container">
-        <Link to="/" className="navbar-logo">
-          Your Logo
-        </Link>
 
-        <div className="navbar-links">
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const openMenu = () => {
+    setIsMenuOpen(true);
+  };
+
+  return (
+    <nav className={`navbar ${isMenuOpen ? "open" : ""}`}>
+      <div className="navbar-container">
+        <div className={`navbar-header ${isMenuOpen ? "open" : ""}`}>
+          <Link to="/" className="navbar-logo">
+            Your Logo
+          </Link>
+          <button className="menu-button" onClick={toggleMenu}>
+            Menu
+          </button>
+          {!isMenuOpen && (
+            <button className="reopen-button" onClick={openMenu}>
+              Reopen Menu
+            </button>
+          )}
+        </div>
+
+        <div className={`navbar-links ${isMenuOpen ? "open" : ""}`}>
           <Link to="/account" className="navbar-link">
             Account
           </Link>
@@ -30,7 +50,9 @@ const Navbar = () => {
           <Link to="/messages" className="navbar-link">
             Messages
           </Link>
-          <button onClick={handleSignOut}>Sign Out</button>
+          <Link onClick={handleSignOut} className="navbar-link">
+            Sign Out
+          </Link>
         </div>
       </div>
     </nav>
