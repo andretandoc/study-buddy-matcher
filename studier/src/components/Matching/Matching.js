@@ -86,7 +86,7 @@ function Matching() {
           // Set a timer to hide the popup after 2 seconds
           setTimeout(() => {
             setShowMatchPopup(false);
-          }, 2500);
+          }, 2400);
         }
       } else {
         await dislikeUser(user.uid, likedUserId);
