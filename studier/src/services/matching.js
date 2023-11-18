@@ -10,6 +10,7 @@ import {
   deleteDoc,
   addDoc,
   getDoc,
+  setDoc,
   updateDoc,
   orderBy,
   Timestamp,
@@ -41,4 +42,35 @@ const getRandomUsers = async (count, uid) => {
   }
 };
 
-export { getRandomUsers };
+const likeUser = async (likerUid, likedUserId) => {
+  try {
+    const likesCollection = collection(db, "likes");
+
+    // Create a document in the 'likes' collection representing the like
+    await setDoc(doc(likesCollection, `${likerUid}_${likedUserId}`), {
+      likedUserId,
+      likedAt: new Date(),
+    });
+
+    // You can perform additional actions if needed, such as updating UI, fetching new users, etc.
+  } catch (error) {
+    console.error("Error liking user:", error);
+    throw error;
+  }
+};
+
+const dislikeUser = async (dislikerUid, dislikedUserId) => {
+  try {
+    const likesCollection = collection(db, "likes");
+
+    // Delete the document in the 'likes' collection representing the dislike
+    await deleteDoc(doc(likesCollection, `${dislikerUid}_${dislikedUserId}`));
+
+    // You can perform additional actions if needed, such as updating UI, fetching new users, etc.
+  } catch (error) {
+    console.error("Error disliking user:", error);
+    throw error;
+  }
+};
+
+export { likeUser, dislikeUser, getRandomUsers };

@@ -1,7 +1,10 @@
+// Matching.js
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../services/firebase";
 import { getRandomUsers } from "../../services/matching";
+import { likeUser, dislikeUser } from "../../services/likeActions";
+import { db } from "../../services/firebase";
 
 function Matching() {
   const [user, setUser] = useState("");
@@ -29,7 +32,6 @@ function Matching() {
     const fetchRandomUsers = async () => {
       try {
         if (user && user.uid) {
-          console.log(user.uid);
           const randomizedUsers = await getRandomUsers(5, user.uid);
           setUsers(randomizedUsers);
         }
@@ -41,13 +43,32 @@ function Matching() {
     fetchRandomUsers();
   }, [user]);
 
+  const handleLike = async (likedUserId) => {
+    try {
+      await likeUser(user.uid, likedUserId);
+      // You can perform additional actions if needed, such as updating UI, fetching new users, etc.
+    } catch (error) {
+      console.error("Error handling like:", error);
+    }
+  };
+
+  const handleDislike = async (dislikedUserId) => {
+    try {
+      await dislikeUser(user.uid, dislikedUserId);
+      // You can perform additional actions if needed, such as updating UI, fetching new users, etc.
+    } catch (error) {
+      console.error("Error handling dislike:", error);
+    }
+  };
+
   return (
     <div className="Matching">
       <h1>Matching</h1>
       {users.map((user) => (
         <div key={user.id}>
           <h3>{user.name}</h3>
-          {/* Add other user information or components here */}
+          <button onClick={() => handleLike(user.uid)}>Like</button>
+          <button onClick={() => handleDislike(user.uid)}>Dislike</button>
         </div>
       ))}
     </div>
