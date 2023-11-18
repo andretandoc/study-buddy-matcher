@@ -1,73 +1,39 @@
-/* Add styles for conversation-item, chat-header, message-area, and message-input */
-.messages-container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 20px;
-  height: 100vh;
-  background-color: #EDF2F4;
-}
-
-.conversation-item {
-  padding: 10px;
-  border-bottom: 1px solid #ccc;
-  cursor: pointer;
-}
-
-.chat-header {
-  padding: 10px;
-  background-color: #f5f5f5;
-  border-bottom: 1px solid #ddd;
-}
-
-.message-area {
-  flex-grow: 1;
-  padding: 10px;
-  overflow: auto;
-}
-
-.message-input {
-  display: flex;
-  padding: 10px;
-  border-top: 1px solid #ddd;
-}
-
-.message-input input {
-  flex-grow: 1;
-  padding: 10px;
-  margin-right: 10px;
-  border: 1px solid #ccc;
-}
-
-.message-input button {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
 .messages-container {
   display: flex;
-  height: 100vh;
-  /* This will make the messages container take the full height of the viewport */
+  flex-direction: column;
+  max-width: 1200px;
+  border: '3px solid red';
+  align-items: center;
+  justify-content: center;
+  align-items: center;
 }
 
-.conversation-list {
-  width: 30%;
-  /* Adjust the width as needed */
-  height: 100%;
-  /* Take full height */
-  border-right: 1px solid #ccc;
-  /* Add a dividing line between the list and chat window */
-  overflow-y: auto;
-  /* Allows scrolling for the list if it exceeds the viewport height */
+.messages {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.chat-window {
-  width: 70%;
-  /* Adjust the width as needed */
-  height: 100%;
-  /* Take full height */
-  overflow-y: auto;
-  /* Allows scrolling for the chat window if content exceeds viewport height */
+.message {
+  padding: 8px;
+  border-radius: 8px;
+  margin-bottom: 4px;
+}
+
+.right {
+  align-self: flex-end;
+  background-color: #e2f7cb;
+  /* Light color for current user's messages */
+}
+
+.left {
+  align-self: flex-start;
+  background-color: #d2d2d2;
+  /* Light color for other user's messages */
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }

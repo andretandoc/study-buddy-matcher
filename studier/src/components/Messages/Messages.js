@@ -1,10 +1,11 @@
-// ChatPage.js
 import React, { useState, useEffect } from "react";
 import {
   createChat,
   getChatMessages,
   addChatMessage,
 } from "../../services/messages";
+import "./Messages.css"; // Import a CSS file for styling
+
 const Messages = ({ currentUserUid, matchUid }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
@@ -43,11 +44,26 @@ const Messages = ({ currentUserUid, matchUid }) => {
     }
   };
 
+  const handleKeyPress = (e) => {
+    // Check if the pressed key is Enter (keyCode 13)
+    if (e.key === "Enter") {
+      e.preventDefault(); // Prevent the default behavior (e.g., line break)
+      sendMessage(); // Call the sendMessage function
+    }
+  };
+
   return (
-    <div>
-      <div>
+    <div className="messages-container">
+      <div className="messages">
         {messages.map((message, index) => (
-          <div key={index}>
+          <div
+            key={index}
+            className={
+              message.senderUid === currentUserUid
+                ? "message right"
+                : "message left"
+            }
+          >
             <strong>
               {message.senderUid === currentUserUid ? "You" : "Other User"}:
             </strong>{" "}
@@ -55,11 +71,12 @@ const Messages = ({ currentUserUid, matchUid }) => {
           </div>
         ))}
       </div>
-      <div>
+      <div className="input-container">
         <input
           type="text"
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
+          onKeyDown={handleKeyPress} // Handle keypress event
           placeholder="Type your message..."
         />
         <button onClick={sendMessage}>Send</button>

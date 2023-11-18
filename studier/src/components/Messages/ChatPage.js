@@ -11,7 +11,7 @@ const ChatPage = ({ currentUserUid }) => {
   };
 
   return (
-    <div style={{ border: "3px solid black" }}>
+    <div>
       <Sidebar
         currentUserUid={currentUserUid}
         onChatSelect={handleChatSelect}
