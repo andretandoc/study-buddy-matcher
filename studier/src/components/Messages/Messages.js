@@ -1,37 +1,73 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { auth } from "../../services/firebase";
+import { getChatMessages, addChatMessage } from "../../services/messages";
+import "./Messages.css"; // Import a CSS file for styling
 
-function Messages() {
-  const [user, setUser] = useState("");
+const Messages = ({ currentUserUid, matchUid }) => {
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
 
-  const navigate = useNavigate();
   useEffect(() => {
-    // Firebase Auth state observer
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUser(user);
-      } else {
-        // Redirect to the root path if there's no signed-in user
-        navigate("/");
-      }
-    });
+    const unsubscribe = getChatMessages(currentUserUid, matchUid, setMessages);
 
     return () => {
+      // Unsubscribe from real-time updates when component unmounts
       unsubscribe();
     };
-  }, []);
+  }, [currentUserUid, matchUid]);
 
-  //   if (user) {
-  //     // Redirect to the landing page if user is authenticated
-  //     return navigate("/landingpage");
-  //   }
+  const sendMessage = async () => {
+    if (newMessage.trim() === "") return;
+
+    try {
+      await addChatMessage(currentUserUid, matchUid, newMessage);
+      setNewMessage(""); // Clear the input field after sending
+    } catch (error) {
+      console.error("Error sending message:", error);
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    // Check if the pressed key is Enter (keyCode 13)
+    if (e.key === "Enter") {
+      e.preventDefault(); // Prevent the default behavior (e.g., line break)
+      sendMessage(); // Call the sendMessage function
+    }
+  };
 
   return (
-    <div className="Messages">
-      <h1>Messages</h1>
+    <div className="messages-container">
+      <div className="messages">
+        {messages.map((message, index) => (
+          <div
+            key={index}
+            className={
+              message.senderUid === currentUserUid
+                ? "message right"
+                : "message left"
+            }
+          >
+            <strong>
+              {message.senderUid === currentUserUid ? "You" : "Other User"}:
+            </strong>{" "}
+            {message.text}
+          </div>
+        ))}
+      </div>
+      <div className="input-container">
+        <input
+          className="text-field"
+          type="text"
+          value={newMessage}
+          onChange={(e) => setNewMessage(e.target.value)}
+          onKeyDown={handleKeyPress} // Handle keypress event
+          placeholder="Type your message..."
+        />
+        <button className="send-button" onClick={sendMessage}>
+          Send
+        </button>
+      </div>
     </div>
   );
-}
+};
 
 export default Messages;

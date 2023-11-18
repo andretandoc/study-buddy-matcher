@@ -1,20 +1,27 @@
 /* ProfileCard.css */
 
+
 .ProfileCard {
-  position: relative;
-  width: 400px;
+  position: absolute;
+  /* Change to absolute */
+  max-width: 300px;
+  min-width: 300px;
+  height: 600px;
   border: 1px solid #ddd;
   background-color: #fff;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
   border-radius: 8px;
-  overflow: hidden;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-  /* transform: translateX(10%) translateY(-0%) scale(1); */
+  z-index: 1;
+  /* Add this line */
 }
 
 .ProfileCard.active {
   /* transform: translateX(10%) translateY(-0%) scale(1); */
   box-shadow: 5px 2px 15px rgba(0, 0, 0, 0.4);
+  z-index: 40;
+  /* background-color: red; */
+  width: 300px;
 }
 
 .ProfileCardHeader {

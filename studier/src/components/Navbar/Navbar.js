@@ -40,14 +40,14 @@ const Navbar = () => {
           <Link to="/" className="navbar-logo">
             <Logo />
           </Link>
-          <Link to="/accounts" className="navbar-link">
-            Account
-          </Link>
           <Link to="/match" className="navbar-link">
             Match
-          </Link>
+          </Link>{" "}
           <Link to="/messages" className="navbar-link">
             Messages
+          </Link>
+          <Link to="/accounts" className="navbar-link">
+            Account
           </Link>
         </div>
 

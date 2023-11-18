@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { auth,db } from "../../services/firebase";
+import { auth, db } from "../../services/firebase";
 import "./Accounts.css";
-import { getFirestore,
+import {
+  getFirestore,
   query,
   getDocs,
   collection,
@@ -10,8 +11,9 @@ import { getFirestore,
   addDoc,
   doc,
   getDoc,
-  updateDoc,} from "firebase/firestore";
-import {updateUserInfo} from "../../services/account"
+  updateDoc,
+} from "firebase/firestore";
+import { updateUserInfo } from "../../services/account";
 
 function Accounts() {
   const [userId, setUserId] = useState("");
@@ -27,9 +29,36 @@ function Accounts() {
 
   useEffect(() => {
     // Firebase Auth state observer
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
         setUser(user);
+        const userInformationCollection = collection(db, "user_information");
+        const q = query(
+          userInformationCollection,
+          where("uid", "==", user.uid)
+        );
+        const querySnapshot = await getDocs(q);
+        console.log(querySnapshot);
+        if (!querySnapshot.empty) {
+          setName(user.name);
+          setDescription(user.description);
+          setImage(user.image);
+          setMajor(user.major);
+          setYearOfStudy(user.yearOfStudy);
+          setCurrentCourses(user.setCurrentCourses);
+          setPastCourses(user.setPastCourses);
+        } else {
+          addDoc(collection(db, "user_information"), {
+            uid: user.uid,
+            name: "",
+            major: "",
+            description: "",
+            image: "",
+            yearOfStudy: 0,
+            currentCourses: [],
+            pastCourses: [],
+          });
+        }
       } else {
         // Redirect to the root path if there's no signed-in user
         navigate("/");
@@ -40,80 +69,48 @@ function Accounts() {
     };
   }, []);
 
-  useEffect(() => {
-    // Firebase Auth state observer
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      const userInformationCollection = collection(db,'user_information');
-      const q = query(userInformationCollection, where("uid", "==", user.uid));
-      const querySnapshot = getDocs(q);
-      if (!querySnapshot.empty) {
-        setName(user.name);
-        setDescription(user.description);
-        setImage(user.image);
-        setMajor(user.major);
-        setYearOfStudy(user.yearOfStudy);
-        setCurrentCourses(user.setCurrentCourses);
-        setPastCourses(user.setPastCourses);
-      }else{
-        addDoc(collection(db, "user_information"), {
-          uid: user.uid,
-          name: "",
-          major: "",
-          description: "",
-          image: "",
-          yearOfStudy: 0,
-          currentCourses: [],
-          pastCourses: []
-        });
-      }
-    });
-    return () => {
-      unsubscribe();
-    };
-  }, []);
-
   return (
     <div className="AccountInfoContainer">
       <form>
-      <div>
-            <label>Name</label>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
+        <div>
+          <label>Name</label>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
         </div>
         <div>
-            <label>Major</label>
-            <input
-              type="text"
-              value={major}
-              onChange={(e) => setMajor(e.target.value)}
-            />
+          <label>Major</label>
+          <input
+            type="text"
+            value={major}
+            onChange={(e) => setMajor(e.target.value)}
+          />
         </div>
         <div>
-            <label>Description</label>
-            <input
-              type="text"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
+          <label>Description</label>
+          <input
+            type="text"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
         </div>
         <div>
-            <label>yearOfStudy</label>
-            <input
-              type="number"
-              value={yearOfStudy}
-              onChange={(e) => setYearOfStudy(e.target.value)}
-            />
+          <label>yearOfStudy</label>
+          <input
+            type="number"
+            value={yearOfStudy}
+            onChange={(e) => setYearOfStudy(e.target.value)}
+          />
         </div>
         <div>
-            <label>Image</label>
-            <input
-              type="image"
-              value={image}
-              onChange={(e) => setImage(e.target.value)}
-            />
+          <label>Image</label>
+          <input
+            type="image"
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
+          />
         </div>
         <div>
           <button type="button" onClick={updateUserInfo}>
