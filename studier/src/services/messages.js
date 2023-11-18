@@ -16,7 +16,13 @@ const chatsCollection = collection(db, "chats");
 
 const createChat = async (user1Uid, user2Uid) => {
   try {
-    const chatRef = doc(chatsCollection, `${user1Uid}_${user2Uid}`);
+    // Create a unique chat ID based on user UIDs
+    const chatId =
+      user1Uid < user2Uid
+        ? `${user1Uid}_${user2Uid}`
+        : `${user2Uid}_${user1Uid}`;
+
+    const chatRef = doc(chatsCollection, chatId);
     await setDoc(chatRef, { users: [user1Uid, user2Uid] });
   } catch (error) {
     console.error("Error creating chat:", error);
@@ -41,10 +47,9 @@ const getChats = async (currentUserUid) => {
     throw error;
   }
 };
-
-const getChatMessages = async (currentUserUid, matchUid) => {
+const getChatMessages = async (chatId) => {
   try {
-    const chatRef = doc(chatsCollection, `${currentUserUid}_${matchUid}`);
+    const chatRef = doc(chatsCollection, chatId);
     const messagesQuery = query(
       collection(chatRef, "messages"),
       orderBy("timestamp")

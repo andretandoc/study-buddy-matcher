@@ -5,9 +5,11 @@ import Sidebar from "./Sidebar/Sidebar";
 
 const ChatPage = ({ currentUserUid }) => {
   const [selectedChatUid, setSelectedChatUid] = useState(null);
+  // const [otherUserUid, setOtherUserUid] = useState(null);
 
-  const handleChatSelect = (chatUid) => {
-    setSelectedChatUid(chatUid);
+  const handleChatSelect = (chatId, otherUserUid) => {
+    setSelectedChatUid(chatId);
+    // setOtherUserUid(otherUserUid);
   };
 
   return (
