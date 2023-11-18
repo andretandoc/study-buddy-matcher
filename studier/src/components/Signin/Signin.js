@@ -7,9 +7,9 @@ import {
   sendPasswordReset,
   auth,
 } from "../../services/firebase";
-import "./Sigin.css";
+import "./Signin.css";
 
-function SignIn() {
+function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
@@ -22,6 +22,7 @@ function SignIn() {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         setUser(user);
+        navigate("/matching");
       } else {
         // Redirect to the root path if there's no signed-in user
         navigate("/");
@@ -49,10 +50,10 @@ function SignIn() {
     sendPasswordReset(email);
   };
 
-  if (user) {
-    // Redirect to the landing page if user is authenticated
-    return navigate("/landingpage");
-  }
+  //   if (user) {
+  //     // Redirect to the landing page if user is authenticated
+  //     return navigate("/landingpage");
+  //   }
 
   return (
     <div className="SigninContainer">
@@ -116,4 +117,4 @@ function SignIn() {
   );
 }
 
-export default SignIn;
+export default Signin;

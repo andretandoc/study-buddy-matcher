@@ -21,14 +21,13 @@ import {
 } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDFebTVYTFPyMkCNENzPmEO4hrB8ac-YTc",
-  authDomain: "bigbrother-4321.firebaseapp.com",
-  databaseURL: "https://bigbrother-4321.firebaseio.com",
-  projectId: "bigbrother-4321",
-  storageBucket: "bigbrother-4321.appspot.com",
-  messagingSenderId: "555916862823",
-  appId: "1:555916862823:web:d13134935cf32cb92f7bc2",
-  measurementId: "G-CGJQQ8EVKS",
+  apiKey: "AIzaSyAoUKtHHWyHloIcRSmvFOpSGjVri3Sk7L0",
+  authDomain: "studium-e8bc7.firebaseapp.com",
+  projectId: "studium-e8bc7",
+  storageBucket: "studium-e8bc7.appspot.com",
+  messagingSenderId: "549229249167",
+  appId: "1:549229249167:web:f6206d916624952888a6fa",
+  measurementId: "G-D5YQ2ZLNK4",
 };
 
 const app = initializeApp(firebaseConfig);
