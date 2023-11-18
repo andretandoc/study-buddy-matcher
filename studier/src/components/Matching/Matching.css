@@ -4,15 +4,22 @@
   max-width: 1400px;
   margin: 0 auto;
   padding: 20px;
+  align-items: center;
+  flex-direction: column;
   height: 100vh;
-  background-color: #EDF2F4; /* Use the background color from your palette */
+  background-color: #EDF2F4;
+  justify-content: center;
+  align-content: center;
+  display: flex;
+
 }
 
 /* Styling for user cards container */
 .ProfileCardsContainer {
   position: relative;
-  margin-top: 100px;
+  /* margin-top: 100px; */
   perspective: 1000px;
+  max-width: 400px;
   align-items: center;
   align-content: center;
   justify-content: center;

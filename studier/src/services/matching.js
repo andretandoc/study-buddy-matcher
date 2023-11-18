@@ -17,6 +17,7 @@ import {
 } from "firebase/firestore";
 
 const likesCollection = collection(db, "likes");
+const chatsCollection = collection(db, "chats");
 
 const getRandomUsers = async (count, uid) => {
   try {
@@ -88,7 +89,13 @@ const haveMutualLike = async (user1Uid, user2Uid) => {
   try {
     const user1LikedUser2 = await checkLike(false, user1Uid, user2Uid);
     // const user2LikedUser1 = await checkLike(user2Uid, user1Uid);
-
+    if (user1LikedUser2) {
+      // Create a chat document with a unique identifier for the matched users
+      const chatId = `${user1Uid}_${user2Uid}`;
+      await setDoc(doc(chatsCollection, chatId), {
+        users: [user1Uid, user2Uid],
+      });
+    }
     return user1LikedUser2;
   } catch (error) {
     console.error("Error checking mutual like:", error);
