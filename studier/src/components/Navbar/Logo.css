@@ -1,0 +1,20 @@
+/* LogoComponent.css */
+
+.logo-container {
+  background-color: white;
+  width: 90px; /* Adjust width as needed */
+  height: 90px; /* Adjust height as needed */
+  border-radius: 50%;
+  padding: 10px;
+  position: relative;
+}
+
+.overlay-image {
+  position: absolute;
+  top: 72px;
+  left: 40px;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  /* object-fit: cover; Adjust the object-fit property as needed */
+}

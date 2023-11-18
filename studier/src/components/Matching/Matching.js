@@ -1,4 +1,5 @@
 // Matching.js
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../services/firebase";
@@ -8,10 +9,13 @@ import {
   dislikeUser,
   haveMutualLike,
 } from "../../services/matching";
+import "./Matching.css";
+import ProfileCard from "./ProfileCard/ProfileCard";
 
 function Matching() {
   const [user, setUser] = useState("");
   const [users, setUsers] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -46,45 +50,54 @@ function Matching() {
     fetchRandomUsers();
   }, [user]);
 
-  const handleLike = async (likedUserId) => {
+  const handleLikeOrDislike = async (likedUserId, isLike) => {
     try {
-      await likeUser(user.uid, likedUserId);
+      // Slide the card off the screen before removing it from the array
+      const card = document.getElementById(`profileCard_${likedUserId}`);
+      if (card) {
+        card.style.transform = isLike
+          ? "translateX(250%) translateY(-50%) scale(0.8)"
+          : "translateX(-250%) translateY(-50%) scale(0.8)";
 
-      // Check if the liked user has also liked the current user
-      console.log(user.uid);
-      console.log(likedUserId);
-      const mutualLike = await haveMutualLike(user.uid, likedUserId);
-      console.log(mutualLike);
-      if (mutualLike) {
-        // Show a popup or perform any action for a mutual like
-        alert("Mutual Like! You and the user have liked each other!");
+        // Wait for the animation to complete before removing the card
+        setTimeout(() => {
+          // Remove the disliked user from the array
+          setUsers((prevUsers) =>
+            prevUsers.filter((user) => user.uid !== likedUserId)
+          );
+
+          // Move to the next user card
+          setCurrentIndex((prevIndex) =>
+            prevIndex < users.length - 1 ? prevIndex + 1 : prevIndex
+          );
+        }, 300); // Adjust the timeout based on your transition duration
       }
 
-      // You can perform additional actions if needed, such as updating UI, fetching new users, etc.
+      // Handle liking or disliking the user (outside the animation timeout)
+      if (isLike) {
+        await likeUser(user.uid, likedUserId);
+      } else {
+        await dislikeUser(user.uid, likedUserId);
+      }
     } catch (error) {
-      console.error("Error handling like:", error);
-    }
-  };
-
-  const handleDislike = async (dislikedUserId) => {
-    try {
-      await dislikeUser(user.uid, dislikedUserId);
-      // You can perform additional actions if needed, such as updating UI, fetching new users, etc.
-    } catch (error) {
-      console.error("Error handling dislike:", error);
+      console.error(`Error handling ${isLike ? "like" : "dislike"}:`, error);
     }
   };
 
   return (
     <div className="Matching">
       <h1>Matching</h1>
-      {users.map((user) => (
-        <div key={user.id}>
-          <h3>{user.name}</h3>
-          <button onClick={() => handleLike(user.uid)}>Like</button>
-          <button onClick={() => handleDislike(user.uid)}>Dislike</button>
-        </div>
-      ))}
+      <div className="ProfileCardsContainer">
+        {users.map((userData, index) => (
+          <ProfileCard
+            key={userData.id}
+            userData={userData}
+            isActive={index === currentIndex}
+            onLike={() => handleLikeOrDislike(userData.uid, true)}
+            onDislike={() => handleLikeOrDislike(userData.uid, false)}
+          />
+        ))}
+      </div>
     </div>
   );
 }

@@ -1,17 +1,28 @@
+// ProfileCard.js
+
 import React from "react";
 import "./ProfileCard.css";
-// import profile_icon from "../assets/icon_image.jpg";
 
-const ProfileCard = () => {
+const ProfileCard = ({ userData, isActive, onLike, onDislike }) => {
   return (
-    <div className="pc">
-      <div className="gradient"></div>
-      <div className="profile-down"></div>
-      {/* <img src={profile_icon} alt="" /> */}
-      <div className="profile-title">Placeholder Name</div>
-      <div className="profile-description">Placeholder Description</div>
-      <div className="profile-button">
-        <a href="mailto:placeholderemail@mail.com"> */ Contact Me</a>
+    <div
+      id={`profileCard_${userData.uid}`}
+      className={`ProfileCard ${isActive ? "active" : ""}`}
+      style={{ zIndex: isActive ? 1 : 0, height: "auto" }}
+    >
+      <div className="ProfileCardHeader">
+        <h3>{userData.name}</h3>
+      </div>
+      <div className="ProfileCardBody">
+        {/* Add other user attributes as needed */}
+      </div>
+      <div className="ProfileCardFooter">
+        <button className="like" onClick={onLike}>
+          Like
+        </button>
+        <button className="dislike" onClick={onDislike}>
+          Dislike
+        </button>
       </div>
     </div>
   );

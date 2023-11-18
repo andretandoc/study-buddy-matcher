@@ -1,0 +1,62 @@
+/* Matching.css */
+
+.Matching {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+  height: 100vh;
+  background-color: #EDF2F4; /* Use the background color from your palette */
+}
+
+/* Styling for user cards container */
+.ProfileCardsContainer {
+  position: relative;
+  margin-top: 100px;
+  perspective: 1000px;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  display: flex;
+}
+
+/* Styling for user cards */
+.MatchingUserCard {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #ddd;
+  padding: 10px;
+  background-color: #fff;
+  transform-origin: 50% 50%;
+  transition: transform 0.3s ease-in-out;
+}
+
+.MatchingUserCard.active {
+  transform: translateX(-50%) translateY(-50%) scale(1);
+}
+
+.MatchingUserCard button {
+  margin-right: 5px;
+  cursor: pointer;
+  padding: 5px 10px;
+  border: none;
+  color: #5E6472;
+  border-radius: 3px;
+}
+
+/* Like button */
+.MatchingUserCard button.like {
+  background-color: #B8F2E6;
+}
+
+/* Dislike button */
+.MatchingUserCard button.dislike {
+  background-color: #ffa69e;
+}
+
+/* Adjust the color of the buttons on hover */
+.MatchingUserCard button:hover {
+  opacity: 0.8;
+}
