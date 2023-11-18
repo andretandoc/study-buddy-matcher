@@ -4,17 +4,52 @@ import React from "react";
 import "./ProfileCard.css";
 
 const ProfileCard = ({ userData, isActive, onLike, onDislike }) => {
+  const {
+    name,
+    pastCourses,
+    yearOfStudy,
+    description,
+    currentCourses,
+    major,
+    uid,
+    image,
+  } = userData;
+
   return (
     <div
-      id={`profileCard_${userData.uid}`}
+      id={`profileCard_${uid}`}
       className={`ProfileCard ${isActive ? "active" : ""}`}
-      style={{ zIndex: isActive ? 1 : 0, height: "auto" }}
     >
       <div className="ProfileCardHeader">
-        <h3>{userData.name}</h3>
+        <h3>{name}</h3>
       </div>
       <div className="ProfileCardBody">
-        {/* Add other user attributes as needed */}
+        <div className="ProfileCardInfo">
+          <p>
+            <strong>Year of Study:</strong> {yearOfStudy}
+          </p>
+          <p>
+            <strong>Major:</strong> {major}
+          </p>
+        </div>
+        <div className="ProfileCardCourses">
+          <p>
+            <strong>Past Courses:</strong> {pastCourses.join(", ")}
+          </p>
+          <p>
+            <strong>Current Courses:</strong> {currentCourses.join(", ")}
+          </p>
+        </div>
+        <div className="ProfileCardDescription">
+          <p>
+            <strong>Description:</strong> {description}
+          </p>
+        </div>
+        {image && (
+          <div className="ProfileCardImage">
+            <img src={`data:image/png;base64, ${image}`} alt="User" />
+          </div>
+        )}
       </div>
       <div className="ProfileCardFooter">
         <button className="like" onClick={onLike}>

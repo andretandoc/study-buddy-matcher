@@ -20,7 +20,7 @@ const likesCollection = collection(db, "likes");
 
 const getRandomUsers = async (count, uid) => {
   try {
-    const usersRef = collection(db, "users");
+    const usersRef = collection(db, "user_information");
 
     // Query all users except the one with the specified UID
     const q = query(usersRef, where("uid", "!=", uid));

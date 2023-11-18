@@ -11,11 +11,13 @@ import {
 } from "../../services/matching";
 import "./Matching.css";
 import ProfileCard from "./ProfileCard/ProfileCard";
+import MatchPopup from "./Popup/Popup";
 
 function Matching() {
   const [user, setUser] = useState("");
   const [users, setUsers] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [showMatchPopup, setShowMatchPopup] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -76,6 +78,16 @@ function Matching() {
       // Handle liking or disliking the user (outside the animation timeout)
       if (isLike) {
         await likeUser(user.uid, likedUserId);
+        const mutual = await haveMutualLike(user.uid, likedUserId);
+        if (mutual) {
+          // Show the MatchPopup when there is a mutual like
+          setShowMatchPopup(true);
+
+          // Set a timer to hide the popup after 2 seconds
+          setTimeout(() => {
+            setShowMatchPopup(false);
+          }, 2500);
+        }
       } else {
         await dislikeUser(user.uid, likedUserId);
       }
@@ -98,6 +110,10 @@ function Matching() {
           />
         ))}
       </div>
+
+      {showMatchPopup && (
+        <MatchPopup onClose={() => setShowMatchPopup(false)} />
+      )}
     </div>
   );
 }
