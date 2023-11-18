@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  createChat,
-  getChatMessages,
-  addChatMessage,
-} from "../../services/messages";
+import { getChatMessages, addChatMessage } from "../../services/messages";
 import "./Messages.css"; // Import a CSS file for styling
 
 const Messages = ({ currentUserUid, matchUid }) => {
@@ -11,33 +7,18 @@ const Messages = ({ currentUserUid, matchUid }) => {
   const [newMessage, setNewMessage] = useState("");
 
   useEffect(() => {
-    const getMessages = async () => {
-      try {
-        const chatMessages = await getChatMessages(currentUserUid, matchUid);
-        console.log(chatMessages);
-        setMessages(chatMessages);
-      } catch (error) {
-        console.error("Error fetching messages:", error);
-      }
-    };
+    const unsubscribe = getChatMessages(currentUserUid, matchUid, setMessages);
 
-    getMessages();
+    return () => {
+      // Unsubscribe from real-time updates when component unmounts
+      unsubscribe();
+    };
   }, [currentUserUid, matchUid]);
 
   const sendMessage = async () => {
     if (newMessage.trim() === "") return;
 
-    // Update local state immediately
-    setMessages((prevMessages) => [
-      ...prevMessages,
-      {
-        senderUid: currentUserUid,
-        text: newMessage,
-      },
-    ]);
-
     try {
-      // Add the message to the database
       await addChatMessage(currentUserUid, matchUid, newMessage);
       setNewMessage(""); // Clear the input field after sending
     } catch (error) {

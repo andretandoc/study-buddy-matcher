@@ -6,6 +6,7 @@ import {
   collection,
   getDocs,
   query,
+  onSnapshot,
   where,
   addDoc,
   serverTimestamp,
@@ -47,7 +48,7 @@ const getChats = async (currentUserUid) => {
     throw error;
   }
 };
-const getChatMessages = async (cur, other) => {
+const getChatMessages = (cur, other, callback) => {
   try {
     const chatId = cur < other ? `${cur}_${other}` : `${other}_${cur}`;
     const chatRef = doc(chatsCollection, chatId);
@@ -55,8 +56,14 @@ const getChatMessages = async (cur, other) => {
       collection(chatRef, "messages"),
       orderBy("timestamp")
     );
-    const messagesSnapshot = await getDocs(messagesQuery);
-    return messagesSnapshot.docs.map((doc) => doc.data());
+
+    // Subscribe to real-time updates
+    const unsubscribe = onSnapshot(messagesQuery, (snapshot) => {
+      const messagesData = snapshot.docs.map((doc) => doc.data());
+      callback(messagesData);
+    });
+
+    return unsubscribe; // Return the unsubscribe function
   } catch (error) {
     console.error("Error fetching chat messages:", error);
     throw error;
