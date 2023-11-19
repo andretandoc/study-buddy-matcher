@@ -38,9 +38,6 @@ const getRandomUsers = async (count, uid) => {
     const filteredUsers = await Promise.all(
       usersData.map(async (user) => {
         const liked = await checkLike(true, uid, user.uid);
-        console.log(liked);
-        console.log(uid);
-        console.log(user.uid);
         return liked ? null : user;
       })
     );

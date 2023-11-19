@@ -1,125 +1,238 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { auth, db } from "../../services/firebase";
 import "./Accounts.css";
+import { auth } from "../../services/firebase";
+import { useNavigate } from "react-router-dom";
 import {
-  getFirestore,
-  query,
-  getDocs,
-  collection,
-  where,
-  addDoc,
-  doc,
-  getDoc,
-  updateDoc,
-} from "firebase/firestore";
-import { updateUserInfo } from "../../services/account";
+  updateUserInformation,
+  fetchUserDetails,
+  addUserInformation,
+} from "../../services/account";
 
-function Accounts() {
-  const [userId, setUserId] = useState("");
+const Accounts = () => {
+  // State variables for user information
   const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [image, setImage] = useState("");
   const [major, setMajor] = useState("");
-  const [yearOfStudy, setYearOfStudy] = useState(0);
-  const [currentCourses, setCurrentCourses] = useState([]);
+  const [yearsOfStudy, setYearsOfStudy] = useState("");
+  const [description, setDescription] = useState("");
   const [pastCourses, setPastCourses] = useState([]);
-  const [user, setUser] = useState(null); // To store the authenticated user
+  const [currentCourses, setCurrentCourses] = useState([]);
+  const [newPastCourse, setNewPastCourse] = useState("");
+  const [newCurrentCourse, setNewCurrentCourse] = useState("");
+  const [user, setUser] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
     // Firebase Auth state observer
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
-      if (user) {
-        setUser(user);
-        const userInformationCollection = collection(db, "user_information");
-        const q = query(
-          userInformationCollection,
-          where("uid", "==", user.uid)
-        );
-        const querySnapshot = await getDocs(q);
-        console.log(querySnapshot);
-        if (!querySnapshot.empty) {
-          setName(user.name);
-          setDescription(user.description);
-          setImage(user.image);
-          setMajor(user.major);
-          setYearOfStudy(user.yearOfStudy);
-          setCurrentCourses(user.setCurrentCourses);
-          setPastCourses(user.setPastCourses);
+    const unsubscribe = auth.onAuthStateChanged(async (authUser) => {
+      if (authUser) {
+        setUser(authUser);
+
+        // Fetch user details using the auth user ID
+        const userDetails = await fetchUserDetails(authUser.uid);
+
+        // Set the relevant data if user details are found
+        if (userDetails) {
+          setName(userDetails.name || ""); // Replace 'name' with the actual field name in user details
+          setMajor(userDetails.major || "");
+          setYearsOfStudy(userDetails.yearsOfStudy || "");
+          setDescription(userDetails.description || "");
+          setPastCourses(userDetails.pastCourses || []);
+          setCurrentCourses(userDetails.currentCourses || []);
         } else {
-          addDoc(collection(db, "user_information"), {
-            uid: user.uid,
-            name: "",
-            major: "",
-            description: "",
-            image: "",
-            yearOfStudy: 0,
-            currentCourses: [],
-            pastCourses: [],
-          });
+          addUserInformation(authUser.uid);
         }
       } else {
         // Redirect to the root path if there's no signed-in user
         navigate("/");
       }
     });
+
     return () => {
       unsubscribe();
     };
   }, []);
 
+  // Function to handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Prepare user data
+    const userData = {
+      name,
+      major,
+      yearsOfStudy,
+      description,
+      pastCourses,
+      currentCourses,
+    };
+
+    // Send user data to Firebase
+    await updateUserInformation(user.uid, userData);
+
+    // Clear the form or perform any other necessary actions
+    clearForm();
+  };
+
+  // Function to clear the form fields
+  const clearForm = () => {
+    setName("");
+    setMajor("");
+    setYearsOfStudy("");
+    setDescription("");
+    setPastCourses([]);
+    setCurrentCourses([]);
+    setNewPastCourse("");
+    setNewCurrentCourse("");
+  };
+
+  // Function to add a course when Enter key is pressed
+  const handleCourseKeyPress = (
+    e,
+    courseList,
+    setCourseList,
+    setNewCourse,
+    course
+  ) => {
+    if (e.key === "Enter" && course.trim() !== "") {
+      setCourseList([...courseList, course.trim()]);
+      setNewCourse("");
+    }
+  };
+
+  // Function to manually add a course
+  const handleAddCourse = (courseList, setCourseList, setNewCourse, course) => {
+    if (course.trim() !== "") {
+      setCourseList([...courseList, course.trim()]);
+      setNewCourse("");
+    }
+  };
+
   return (
-    <div className="AccountInfoContainer">
-      <form>
-        <div>
-          <label>Name</label>
+    <div className="UpdateProfileContainer">
+      <h2>Update Account</h2>
+      <form onSubmit={handleSubmit}>
+        {/* Name */}
+        <label>
+          Name:
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-        </div>
-        <div>
-          <label>Major</label>
+        </label>
+
+        {/* Major */}
+        <label>
+          Major:
           <input
             type="text"
             value={major}
             onChange={(e) => setMajor(e.target.value)}
           />
-        </div>
-        <div>
-          <label>Description</label>
+        </label>
+
+        {/* Years of Study */}
+        <label>
+          Years of Study:
           <input
             type="text"
+            value={yearsOfStudy}
+            onChange={(e) => setYearsOfStudy(e.target.value)}
+          />
+        </label>
+
+        {/* Description */}
+        <label>
+          Description:
+          <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
-        </div>
-        <div>
-          <label>yearOfStudy</label>
+        </label>
+
+        {/* Past Courses */}
+        <label>
+          Past Courses:
           <input
-            type="number"
-            value={yearOfStudy}
-            onChange={(e) => setYearOfStudy(e.target.value)}
+            type="text"
+            value={newPastCourse}
+            onChange={(e) => setNewPastCourse(e.target.value)}
           />
-        </div>
-        <div>
-          <label>Image</label>
-          <input
-            type="image"
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
-          />
-        </div>
-        <div>
-          <button type="button" onClick={updateUserInfo}>
-            Save
+          {/* Display past courses */}
+          <button
+            type="button"
+            onKeyDown={(e) =>
+              handleCourseKeyPress(
+                e,
+                currentCourses,
+                setCurrentCourses,
+                setNewCurrentCourse,
+                newPastCourse
+              )
+            }
+            onClick={() =>
+              handleAddCourse(
+                pastCourses,
+                setPastCourses,
+                setNewPastCourse,
+                newPastCourse
+              )
+            }
+          >
+            Add Past Course
           </button>
-        </div>
+          <ul>
+            {pastCourses.map((course, index) => (
+              <li key={index}>{course}</li>
+            ))}
+          </ul>
+          {/* Add Course button */}
+        </label>
+
+        {/* Past Courses */}
+        <label>
+          Current Courses:
+          <input
+            type="text"
+            value={newCurrentCourse}
+            onChange={(e) => setNewCurrentCourse(e.target.value)}
+          />
+          {/* Display past courses */}
+          <button
+            type="button"
+            onKeyDown={(e) =>
+              handleCourseKeyPress(
+                e,
+                currentCourses,
+                setCurrentCourses,
+                setNewCurrentCourse,
+                newCurrentCourse
+              )
+            }
+            onClick={() =>
+              handleAddCourse(
+                currentCourses,
+                setCurrentCourses,
+                setNewCurrentCourse,
+                newCurrentCourse
+              )
+            }
+          >
+            Add Current Course
+          </button>
+          <ul>
+            {currentCourses.map((course, index) => (
+              <li key={index}>{course}</li>
+            ))}
+          </ul>
+          {/* Add Course button */}
+        </label>
+
+        {/* Submit button */}
+        <button>Update Account</button>
       </form>
     </div>
   );
-}
+};
 
 export default Accounts;
