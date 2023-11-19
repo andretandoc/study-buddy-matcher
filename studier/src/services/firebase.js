@@ -113,6 +113,7 @@ const fetchUserDetails = async (uid) => {
     throw error;
   }
 };
+
 const updateUserDetails = async (uid, userDetails) => {
   try {
     // Query to find the user document based on the uid field

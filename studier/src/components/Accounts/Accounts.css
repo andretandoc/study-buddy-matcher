@@ -1,8 +1,47 @@
-.AccountInfoContainer {
-    max-width: 1400px;
+.UpdateProfileContainer {
+    max-width: 600px;
     margin: 0 auto;
     padding: 20px;
-    height: 100vh;
-    background-color: #7ad2f5;
-    /* Use the background color from your palette */
+    background-color: #edf2f4;
+    border-radius: 8px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #2b2d42;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+button {
+    background-color: #2b2d42;
+    color: #edf2f4;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #ef233c;
 }
