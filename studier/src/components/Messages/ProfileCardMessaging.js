@@ -26,7 +26,7 @@ const ProfileCardMessaging = ({ selected }) => {
       <div className="ProfileCardBody">
         <div className="ProfileCardInfo">
           <p>
-            <strong>Year of Study:</strong> {userData.yearOfStudy}
+            <strong>U{userData.yearsOfStudy}</strong>
           </p>
           <p>
             <strong>Major:</strong> {userData.major}
@@ -34,17 +34,15 @@ const ProfileCardMessaging = ({ selected }) => {
         </div>
         <div className="ProfileCardCourses">
           <p>
-            {/* <strong>Past Courses:</strong> {userData.pastCourses.join(", ")} */}
+            <strong>Past Courses:</strong> {userData.pastCourses.join(", ")}
           </p>
           <p>
             <strong>Current Courses:</strong>{" "}
-            {/* {userData.currentCourses.join(", ")} */}
+            {userData.currentCourses.join(", ")}
           </p>
         </div>
         <div className="ProfileCardDescription">
-          <p>
-            <strong>Description:</strong> {userData.description}
-          </p>
+          <p>{userData.description}</p>
         </div>
         {userData.image && (
           <div className="ProfileCardImage">

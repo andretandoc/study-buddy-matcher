@@ -23,8 +23,8 @@
   width: 600px;
 }
 
-.ProfileCardHeader {
-  padding: 20px;
+.ProfileCardHeaderr {
+  padding: 10px;
   border-bottom: 1px solid #ddd;
 }
 
@@ -34,12 +34,17 @@
   font-size: 1.5rem;
 }
 
-.ProfileCardBody {
-  padding: 20px;
+.ProfileCardBodyy {
+  padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
+.ProfileCardBodyy p {
+  /* padding: 10px; */
+}
+
 
 .ProfileCardImage img {
   width: 100%;
@@ -65,10 +70,10 @@
 }
 
 .ProfileCardDescription {
-  border: 2px solid #2B2D42;
+  /* border: 2px solid #2B2D42; */
   text-align: justify;
   border-radius: 10px;
-  height: 100px;
+  height: auto;
   width: 100%;
 }
 

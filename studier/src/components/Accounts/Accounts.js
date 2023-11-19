@@ -42,7 +42,8 @@ const Accounts = () => {
           setDescription(userDetails.description || "");
           setPastCourses(userDetails.pastCourses || []);
           setCurrentCourses(userDetails.currentCourses || []);
-          setPreviewImage(userDetails.image || ""); // Set the image preview
+          setPreviewImage(userDetails.image || ""); // Decode and set the image preview
+          setBase64Image(userDetails.image || ""); // Set the image preview
         } else {
           addUserInformation(authUser.uid);
         }
@@ -152,7 +153,7 @@ const Accounts = () => {
     await updateUserInformation(user.uid, userData);
 
     // Clear the form or perform any other necessary actions
-    clearForm();
+    // clearForm();
   };
 
   // Function to clear the form fields
@@ -324,7 +325,7 @@ const Accounts = () => {
           <div className="ImagePreview">
             <img
               style={{ height: "400px", width: "auto", borderRadius: "10px" }}
-              src={previewImage}
+              src={`data:image/png;base64, ${previewImage}`}
               alt="Preview"
             />
           </div>

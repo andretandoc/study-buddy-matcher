@@ -20,10 +20,10 @@ const ProfileCard = ({ userData, isActive, onLike, onDislike }) => {
       id={`profileCard_${uid}`}
       className={`ProfileCard ${isActive ? "active" : ""}`}
     >
-      <div className="ProfileCardHeader">
+      <div className="ProfileCardHeaderr">
         <h2>{name}</h2>
       </div>
-      <div className="ProfileCardBody">
+      <div className="ProfileCardBodyy">
         {image && (
           <div className="ProfileCardImage">
             <img src={`data:image/png;base64, ${image}`} alt="User" />
@@ -37,7 +37,7 @@ const ProfileCard = ({ userData, isActive, onLike, onDislike }) => {
             <strong>Major:</strong> {major}
           </p>
         </div>
-        <div className="ProfileCardCourses">
+        <div style={{ margin: "0px" }}>
           <p>
             <strong>Past Courses:</strong> {pastCourses.join(", ")}
           </p>
@@ -45,7 +45,7 @@ const ProfileCard = ({ userData, isActive, onLike, onDislike }) => {
             <strong>Current Courses:</strong> {currentCourses.join(", ")}
           </p>
         </div>
-        <div className="ProfileCardDescription">
+        <div className="ProfileCardDescriptionn">
           <p>{description}</p>
         </div>
       </div>

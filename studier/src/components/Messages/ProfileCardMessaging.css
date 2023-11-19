@@ -26,7 +26,8 @@
 .ProfileCardDescription p {
     /* ... (previous styles) */
     font-size: 1rem;
-    /* Adjusted font size for better readability */
+    padding: 10px
+        /* Adjusted font size for better readability */
 }
 
 .ProfileCardHeader h2 {

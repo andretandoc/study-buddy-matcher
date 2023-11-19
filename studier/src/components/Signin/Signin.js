@@ -46,7 +46,7 @@ function Signin() {
   };
 
   const handleSignUpWithEmailAndPassword = () => {
-    registerWithEmailAndPassword(displayName, email, password);
+    registerWithEmailAndPassword(email, password);
   };
 
   const handlePasswordReset = () => {
