@@ -46,7 +46,7 @@ const updateUserInformation = async (userId, userData) => {
     console.log(userDocs);
     userDocs.forEach((userDoc) => {
       console.log(userDoc);
-      setDoc(userDoc.ref, userData);
+      setDoc(userDoc.ref, { ...userData, uid: userId });
     });
     // await setDoc(doc(db, "user_information", userId), userData);
     console.log("User information updated successfully!");
@@ -69,7 +69,7 @@ const updateUserInfo = async (
 
   if (!userSnapshot.empty) {
     const userDoc = userSnapshot.docs[0];
-
+    console.log(uid);
     // Update user information
     await updateDoc(userDoc.ref, {
       name: name,
