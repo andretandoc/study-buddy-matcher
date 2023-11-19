@@ -18,13 +18,14 @@ const ChatPage = ({ currentUserUid }) => {
         currentUserUid={currentUserUid}
         onChatSelect={handleChatSelect}
       />
+      
       {selectedChatUid && (
         <>
-        <ProfileCard selectedChatUid={selectedChatUid} />
         <Messages
           currentUserUid={currentUserUid}
           matchUid={selectedChatUid}
         />
+        <ProfileCard selectedChatUid={selectedChatUid} />
         
         </>
         

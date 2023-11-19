@@ -13,6 +13,8 @@
 }
 
 .ProfileCard {
+    position: absolute;
+    float: right;
     flex-shrink: 0;
     /* Add other styles as needed */
 }
