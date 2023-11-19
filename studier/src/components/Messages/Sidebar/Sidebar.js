@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { getChats, getChatUsers } from "../../../services/messages";
 import "./Sidebar.css"; // Import a CSS file for styling
+import { fetchUserDetails } from "../../../services/firebase";
 
 const Sidebar = ({ currentUserUid, onChatSelect }) => {
   const [chats, setChats] = useState([]);
@@ -11,12 +12,18 @@ const Sidebar = ({ currentUserUid, onChatSelect }) => {
       try {
         const userChats = await getChats(currentUserUid);
 
-        // Iterate over each chat object and find the other user's UID
-        const filteredChats = userChats.map((chat) => {
+        // Create an array of promises for fetching user details
+        const userDetailPromises = userChats.map(async (chat) => {
           const otherUserUid = chat.users.find((uid) => uid !== currentUserUid);
-          return { id: chat.id, otherUserUid };
+          const info = await fetchUserDetails(otherUserUid);
+          const name = info.name;
+          return { id: chat.id, otherUserUid, name };
         });
-        setChats(filteredChats);
+
+        // Wait for all promises to resolve using Promise.all
+        const userDetailResults = await Promise.all(userDetailPromises);
+
+        setChats(userDetailResults);
       } catch (error) {
         console.error("Error fetching chats:", error);
       }
@@ -31,7 +38,7 @@ const Sidebar = ({ currentUserUid, onChatSelect }) => {
       <ul className="chat-list">
         {chats.map((chat) => (
           <li key={chat.id} onClick={() => onChatSelect(chat.otherUserUid)}>
-            {chat.otherUserUid}{" "}
+            {chat.name}{" "}
           </li>
         ))}
       </ul>
