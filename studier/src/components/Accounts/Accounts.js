@@ -22,6 +22,7 @@ const Accounts = () => {
   const [imageFile, setImageFile] = useState(null);
   const [base64Image, setBase64Image] = useState("");
   const [previewImage, setPreviewImage] = useState("");
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -35,7 +36,7 @@ const Accounts = () => {
         console.log(userDetails);
         // Set the relevant data if user details are found
         if (userDetails) {
-          setName(userDetails.name || ""); // Replace 'name' with the actual field name in user details
+          setName(userDetails.name || "");
           setMajor(userDetails.major || "");
           setYearsOfStudy(userDetails.yearsOfStudy || "");
           setDescription(userDetails.description || "");
@@ -56,25 +57,11 @@ const Accounts = () => {
     };
   }, []);
 
-  // Function to handle image file selection
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-
-    if (file) {
-      setImageFile(file);
-
-      // Read the image file and set the preview
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewImage(reader.result);
-      };
-      reader.readAsDataURL(file);
-      convertImageToBase64(imageFile);
-    }
-  };
-
+  // Function to convert image file to base64 with downsampling
   const convertImageToBase64 = (imageFile, maxSizeInBytes) => {
     return new Promise((resolve, reject) => {
+      setIsProcessing(true);
+
       const reader = new FileReader();
       reader.onload = (event) => {
         const img = new Image();
@@ -104,18 +91,49 @@ const Accounts = () => {
 
           // Convert the canvas content to base64
           const base64String = canvas.toDataURL("image/jpeg", 0.9); // Adjust the quality if needed
+          setIsProcessing(false);
           resolve(base64String);
         };
         img.src = event.target.result;
       };
-      reader.onerror = reject;
+      reader.onerror = (error) => {
+        setIsProcessing(false);
+        reject(error);
+      };
       reader.readAsDataURL(imageFile);
     });
+  };
+
+  // Function to handle image file selection
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      setImageFile(file);
+
+      // Read the image file and set the preview
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+
+      // Convert image to base64 with downsampling
+      const base64String = await convertImageToBase64(file, 1048487);
+      const final = base64String.split(",")[1];
+      setBase64Image(final);
+    }
   };
 
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Check if image processing is still ongoing
+    if (isProcessing) {
+      console.log("Image is still processing. Please wait.");
+      return;
+    }
 
     // Prepare user data
     const userData = {
@@ -125,8 +143,11 @@ const Accounts = () => {
       description,
       pastCourses,
       currentCourses,
-      image: imageFile ? await convertImageToBase64(imageFile) : null,
+      image: base64Image || null,
     };
+
+    console.log(userData);
+
     // Send user data to Firebase
     await updateUserInformation(user.uid, userData);
 
@@ -143,8 +164,11 @@ const Accounts = () => {
     setPastCourses([]);
     setCurrentCourses([]);
     setNewPastCourse("");
-    setImageFile("");
+    setImageFile(null);
+    setBase64Image("");
+    setPreviewImage("");
     setNewCurrentCourse("");
+    setIsProcessing(false);
   };
 
   // Function to add a course when Enter key is pressed
@@ -251,7 +275,7 @@ const Accounts = () => {
           {/* Add Course button */}
         </label>
 
-        {/* Past Courses */}
+        {/* Current Courses */}
         <label>
           Current Courses:
           <input
@@ -259,7 +283,7 @@ const Accounts = () => {
             value={newCurrentCourse}
             onChange={(e) => setNewCurrentCourse(e.target.value)}
           />
-          {/* Display past courses */}
+          {/* Display current courses */}
           <button
             type="button"
             onKeyDown={(e) =>
@@ -295,6 +319,7 @@ const Accounts = () => {
           Profile Image:
           <input type="file" accept="image/*" onChange={handleImageChange} />
         </label>
+        {isProcessing && <div className="Loader">Processing...</div>}
         {previewImage && (
           <div className="ImagePreview">
             <img
@@ -306,7 +331,7 @@ const Accounts = () => {
         )}
 
         {/* Submit button */}
-        <button>Update Account</button>
+        <button disabled={isProcessing}>Update Account</button>
       </form>
     </div>
   );

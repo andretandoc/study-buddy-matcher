@@ -35,17 +35,14 @@ const fetchUserDetails = async (uid) => {
 };
 const updateUserInformation = async (userId, userData) => {
   try {
-    console.log(userId);
-    console.log(userData);
+    // console.log(userId);
+    // console.log(userData);
     const userQuery = query(
       collection(db, "user_information"),
       where("uid", "==", userId)
     );
-    console.log(userQuery);
     const userDocs = await getDocs(userQuery);
-    console.log(userDocs);
     userDocs.forEach((userDoc) => {
-      console.log(userDoc);
       setDoc(userDoc.ref, { ...userData, uid: userId });
     });
     // await setDoc(doc(db, "user_information", userId), userData);
