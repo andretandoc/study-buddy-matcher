@@ -23,7 +23,7 @@ const Sidebar = ({ currentUserUid, onChatSelect }) => {
 
         // Wait for all promises to resolve using Promise.all
         const userDetailResults = await Promise.all(userDetailPromises);
-
+        console.log(userDetailResults);
         setChats(userDetailResults);
       } catch (error) {
         console.error("Error fetching chats:", error);

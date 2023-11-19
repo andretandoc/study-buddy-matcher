@@ -99,9 +99,11 @@ const fetchUserDetails = async (uid) => {
   try {
     console.log(uid);
     const usersRef = collection(db, "user_information");
+    console.log("1");
     const q = query(usersRef, where("uid", "==", uid));
+    console.log("2");
     const querySnapshot = await getDocs(q);
-
+    console.log(!querySnapshot.empty);
     if (!querySnapshot.empty) {
       const userDoc = querySnapshot.docs[0]; // Assuming 'uid' is unique and only returns one result
       return userDoc.data();

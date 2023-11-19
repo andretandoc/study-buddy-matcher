@@ -8,12 +8,16 @@
 }
 /* Adjust the width of the Messages container as needed */
 .messages-container {
-    flex-grow: 1;
+    width: 40%;
     /* Add other styles as needed */
 }
 
-.ProfileCard {
-    position: absolute;
+.ProfileCardsContainer {
+    width: 20%;
+    /*align-items: right;
+    align-content: right;
+    display: flex;
+    justify-content: center;
     float: right;
     flex-shrink: 0;
     /* Add other styles as needed */
@@ -21,7 +25,7 @@
 
 /* Adjust the width of the Sidebar as needed */
 .sidebar-container {
-    width: 350px;
+    width: 20%;
     /* Add other styles as needed */
 }
 
