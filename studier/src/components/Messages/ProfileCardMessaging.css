@@ -1,8 +1,9 @@
-/* ProfileCard.css */
+/* ProfileCardMessaging.css */
 
 
-.ProfileCard {
+.ProfileCardMessaging {
     position: absolute;
+    margin-left: 1000px;
     /* Change to absolute */
     /* max-width: 300px;
     min-width: 300px; */
@@ -13,7 +14,7 @@
     border-radius: 8px;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     z-index: 1;
-    height: 650px;
+    height: 735px;
     width: 80%;
     /* Adjusted width for responsiveness */
     max-width: 600px;
@@ -35,12 +36,12 @@
     /* Increased font size for the name */
 }
 
-.ProfileCard.active {
+.ProfileCardMessaging.active {
     /* transform: translateX(10%) translateY(-0%) scale(1); */
     box-shadow: 5px 2px 15px rgba(0, 0, 0, 0.4);
     z-index: 40;
     /* background-color: red; */
-    height: 650px;
+    height: 725px;
     width: 600px;
 }
 
@@ -90,7 +91,7 @@
 .ProfileCardFooter {
     display: flex;
     justify-content: space-between;
-    padding: 20px;
+    /* padding: 20px; */
     margin-top: 10px;
 
 }

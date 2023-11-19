@@ -2,20 +2,25 @@
 
 .ProfileCard {
   position: absolute;
-  height: auto;
   overflow-x: hidden;
   text-align: center;
   border: 1px solid #ddd;
   background-color: #fff;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  height: 785px;
+  width: 600px;
   border-radius: 8px;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   z-index: 1;
 }
 
 .ProfileCard.active {
+  /* transform: translateX(10%) translateY(-0%) scale(1); */
   box-shadow: 5px 2px 15px rgba(0, 0, 0, 0.4);
   z-index: 40;
+  /* background-color: red; */
+  height: 785px;
+  width: 600px;
 }
 
 .ProfileCardHeader {
@@ -38,7 +43,7 @@
 
 .ProfileCardImage img {
   width: 100%;
-  height: auto;
+  max-height: 300px;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -52,17 +57,16 @@
 }
 
 .ProfileCardInfo {
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
 }
 
 .ProfileCardCourses {
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
 }
 
 .ProfileCardDescription {
   border: 2px solid #2B2D42;
   text-align: justify;
-  padding: 10px;
   border-radius: 10px;
   height: 100px;
   width: 100%;
@@ -71,8 +75,6 @@
 .ProfileCardFooter {
   display: flex;
   justify-content: space-between;
-  padding: 20px;
-  margin-top: 10px;
 }
 
 .ProfileCardFooter button {

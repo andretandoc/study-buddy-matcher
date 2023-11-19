@@ -41,7 +41,7 @@ function Matching() {
     const fetchRandomUsers = async () => {
       try {
         if (user && user.uid) {
-          const randomizedUsers = await getRandomUsers(5, user.uid);
+          const randomizedUsers = await getRandomUsers(10, user.uid);
           setUsers(randomizedUsers);
         }
       } catch (error) {

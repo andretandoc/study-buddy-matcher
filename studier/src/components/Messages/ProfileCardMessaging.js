@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { fetchUserDetails } from "../../services/firebase";
-import "./ProfileCard.css";
+import "./ProfileCardMessaging.css";
 
-const ProfileCard = ({ selected }) => {
+const ProfileCardMessaging = ({ selected }) => {
   const [userData, setUserData] = useState("");
 
   const fetchUserData = async () => {
@@ -19,10 +19,7 @@ const ProfileCard = ({ selected }) => {
   }, [selected]);
 
   return (
-    <div
-      id={`profileCard_${userData.uid}`}
-      className={`ProfileCard ${true ? "active" : ""}`}
-    >
+    <div id={`profileCard_${userData.uid}`} className={`ProfileCardMessaging`}>
       <div className="ProfileCardHeader">
         <h3>{userData.name}</h3>
       </div>
@@ -59,4 +56,4 @@ const ProfileCard = ({ selected }) => {
   );
 };
 
-export default ProfileCard;
+export default ProfileCardMessaging;
