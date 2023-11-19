@@ -15,7 +15,9 @@
 h1 {
   /* Add this line */
   /* z-index: 3; */
+  justify-content: center;
   top: 0
+  
 }
 
 .ProfileCardsContainer {
