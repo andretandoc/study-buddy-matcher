@@ -15,6 +15,7 @@ const Sidebar = ({ currentUserUid, onChatSelect }) => {
         // Create an array of promises for fetching user details
         const userDetailPromises = userChats.map(async (chat) => {
           const otherUserUid = chat.users.find((uid) => uid !== currentUserUid);
+          console.log(otherUserUid);
           const info = await fetchUserDetails(otherUserUid);
           const name = info.name;
           return { id: chat.id, otherUserUid, name };
