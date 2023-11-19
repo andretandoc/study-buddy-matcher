@@ -20,7 +20,6 @@ const Accounts = () => {
   const [newCurrentCourse, setNewCurrentCourse] = useState("");
   const [user, setUser] = useState("");
   const navigate = useNavigate();
-
   useEffect(() => {
     // Firebase Auth state observer
     const unsubscribe = auth.onAuthStateChanged(async (authUser) => {
