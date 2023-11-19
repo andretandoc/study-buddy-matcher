@@ -7,7 +7,7 @@
   border: 1px solid #ddd;
   background-color: #fff;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-  height: 785px;
+  height: 810px;
   width: 600px;
   border-radius: 8px;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
@@ -19,7 +19,7 @@
   box-shadow: 5px 2px 15px rgba(0, 0, 0, 0.4);
   z-index: 40;
   /* background-color: red; */
-  height: 785px;
+  height: 810px;
   width: 600px;
 }
 
@@ -48,7 +48,7 @@
 
 .ProfileCardImage img {
   width: 100%;
-  max-height: 300px;
+  max-height: 280px;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
