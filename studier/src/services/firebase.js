@@ -97,7 +97,8 @@ const sendPasswordReset = async (email) => {
 
 const fetchUserDetails = async (uid) => {
   try {
-    const usersRef = collection(db, "users");
+    console.log(uid);
+    const usersRef = collection(db, "user_information");
     const q = query(usersRef, where("uid", "==", uid));
     const querySnapshot = await getDocs(q);
 
