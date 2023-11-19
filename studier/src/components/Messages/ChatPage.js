@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Messages from "./Messages";
 import Sidebar from "./Sidebar/Sidebar";
+import ProfileCard from "./ProfileCard";
 import "./ChatPage.css"; // Import a new CSS file for styling
 
 const ChatPage = ({ currentUserUid }) => {
@@ -18,7 +19,13 @@ const ChatPage = ({ currentUserUid }) => {
         onChatSelect={handleChatSelect}
       />
       {selectedChatUid && (
-        <Messages currentUserUid={currentUserUid} matchUid={selectedChatUid} />
+        <>
+          <Messages
+            currentUserUid={currentUserUid}
+            matchUid={selectedChatUid}
+          />
+          <ProfileCard selectedChatUid={selectedChatUid} />
+        </>
       )}
     </div>
   );

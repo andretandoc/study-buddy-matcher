@@ -2,6 +2,9 @@
 
 .chat-page-container {
     display: flex;
+    width: 1400px;
+    margin-left: 220px;
+    height: 100vh;
 }
 
 /* Adjust the width of the Sidebar as needed */

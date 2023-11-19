@@ -1,0 +1,95 @@
+/* ProfileCard.css */
+
+
+.ProfileCard {
+    position: absolute;
+    /* Change to absolute */
+    max-width: 300px;
+    min-width: 300px;
+    height: 600px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    z-index: 1;
+    /* Add this line */
+}
+
+.ProfileCard.active {
+    /* transform: translateX(10%) translateY(-0%) scale(1); */
+    box-shadow: 5px 2px 15px rgba(0, 0, 0, 0.4);
+    z-index: 40;
+    /* background-color: red; */
+    width: 300px;
+}
+
+.ProfileCardHeader {
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.ProfileCardHeader h3 {
+    margin: 0;
+    color: #2b2d42;
+}
+
+.ProfileCardBody {
+    padding: 20px;
+}
+
+.ProfileCardBody p {
+    margin: 0;
+    color: #5e6472;
+}
+
+.ProfileCardInfo {
+    margin-bottom: 20px;
+}
+
+.ProfileCardCourses {
+    margin-bottom: 20px;
+}
+
+.ProfileCardDescription {
+    margin-bottom: 20px;
+}
+
+.ProfileCardImage img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.ProfileCardFooter {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.ProfileCardFooter button {
+    flex: 1;
+    cursor: pointer;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+/* Like button */
+.ProfileCardFooter button.like {
+    background-color: #b8f2e6;
+    color: #2b2d42;
+}
+
+/* Dislike button */
+.ProfileCardFooter button.dislike {
+    background-color: #ffa69e;
+    color: #2b2d42;
+}
+
+/* Adjust the color of the buttons on hover */
+.ProfileCardFooter button:hover {
+    opacity: 0.8;
+}

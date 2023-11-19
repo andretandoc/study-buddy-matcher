@@ -5,7 +5,8 @@ import "./Messages.css"; // Import a CSS file for styling
 const Messages = ({ currentUserUid, matchUid }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-
+  console.log("matchUid");
+  console.log(matchUid);
   useEffect(() => {
     const unsubscribe = getChatMessages(currentUserUid, matchUid, setMessages);
 

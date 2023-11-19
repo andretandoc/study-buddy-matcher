@@ -1,8 +1,9 @@
 /* Sidebar.css */
 
 .sidebar-container {
-    height: 100%;
-    width: 20%;
+    margin: 10px;
+    /* height: 100%; */
+    width: 80px;
     /* Adjust the width as needed */
     background-color: #f7f7f7;
     /* Neutral color */
