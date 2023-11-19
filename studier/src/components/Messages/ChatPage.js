@@ -20,12 +20,14 @@ const ChatPage = ({ currentUserUid }) => {
       />
       {selectedChatUid && (
         <>
-          <Messages
-            currentUserUid={currentUserUid}
-            matchUid={selectedChatUid}
-          />
-          <ProfileCard selectedChatUid={selectedChatUid} />
+        <ProfileCard selectedChatUid={selectedChatUid} />
+        <Messages
+          currentUserUid={currentUserUid}
+          matchUid={selectedChatUid}
+        />
+        
         </>
+        
       )}
     </div>
   );

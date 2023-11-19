@@ -6,15 +6,21 @@
     margin-left: 220px;
     height: 100vh;
 }
+/* Adjust the width of the Messages container as needed */
+.messages-container {
+    flex-grow: 1;
+    /* Add other styles as needed */
+}
+
+.ProfileCard {
+    flex-shrink: 0;
+    /* Add other styles as needed */
+}
 
 /* Adjust the width of the Sidebar as needed */
 .sidebar-container {
-    width: 20%;
+    width: 350px;
     /* Add other styles as needed */
 }
 
-/* Adjust the width of the Messages container as needed */
-.messages-container {
-    width: 80%;
-    /* Add other styles as needed */
-}
+
