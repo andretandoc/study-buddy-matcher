@@ -16,7 +16,7 @@ const ProfileCard = ({ userData, isActive, onLike, onDislike }) => {
   } = userData;
 
   return (
-    <div
+    <div 
       id={`profileCard_${uid}`}
       className={`ProfileCard ${isActive ? "active" : ""}`}
     >

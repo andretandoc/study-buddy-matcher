@@ -4,7 +4,7 @@
   max-width: 1400px;
   /*   margin: 0 auto;
   padding: 20px;*/
-  /* align-items: center; */
+  /* align-items: center; #EDF2F4*/
   height: 100vh;
   background-color: #EDF2F4;
   justify-content: center;
@@ -23,7 +23,7 @@ h1 {
   /* Add this line */
   /* perspective: 1000px; */
   margin-left: -75px;
-  max-width: 600px;
+  max-width: 900px;
   align-items: center;
   align-content: center;
   display: flex;
