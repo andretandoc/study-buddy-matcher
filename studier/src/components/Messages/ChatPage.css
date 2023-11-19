@@ -2,10 +2,11 @@
 
 .chat-page-container {
     display: flex;
-    width: 1400px;
+    width: 1550px;
     margin-left: 220px;
     height: 100vh;
 }
+
 /* Adjust the width of the Messages container as needed */
 .messages-container {
     width: 40%;
@@ -28,5 +29,3 @@
     width: 20%;
     /* Add other styles as needed */
 }
-
-
