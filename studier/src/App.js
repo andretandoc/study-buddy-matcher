@@ -15,7 +15,6 @@ import ChatPage from "./components/Messages/ChatPage.js";
 
 const App = () => {
   const [user, loading, error] = useAuthState(auth);
-
   if (loading) {
     // You might want to show a loading spinner or some indication that the app is loading
     return <div>Loading...</div>;
@@ -56,7 +55,7 @@ const App = () => {
               element={<ChatPage currentUserUid={user.uid} />}
             />
             <Route exact path="/profile" element={<ProfileCard />} />
-            <Route exact path="/accounts" element={<Accounts />} />
+            <Route exact path="/accounts" element={<Accounts user={user}/>} />
           </Routes>
         </div>
       </Router>

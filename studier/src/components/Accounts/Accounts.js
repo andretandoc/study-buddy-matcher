@@ -26,20 +26,39 @@ function Accounts() {
   const [pastCourses, setPastCourses] = useState([]);
   const [user, setUser] = useState(null); // To store the authenticated user
   const navigate = useNavigate();
-
   useEffect(() => {
     // Firebase Auth state observer
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
         setUser(user);
-        const userInformationCollection = collection(db, "user_information");
-        const q = query(
-          userInformationCollection,
-          where("uid", "==", user.uid)
+        const userEmail = user.providerData[0].email;
+        console.log(user);
+
+        const usersCollection = collection(db, "users");
+        const queryUsers = query(
+          usersCollection,
+          where("email", "==", userEmail)
         );
-        const querySnapshot = await getDocs(q);
-        console.log(querySnapshot);
+
+        const queryUsersSnapshot = await getDocs(queryUsers);
+        //console.log(!queryUsersSnapshot.empty);
+        if (!queryUsersSnapshot.empty) {
+          const usersDocRef = queryUsersSnapshot.docs[0].ref;
+
+        }
+
+        const userInformationCollection = collection(db, "user_information");
+        const queryUserInformation = query(
+          userInformationCollection,
+          where("", "==", userEmail)
+        );
+        //console.log(user.providerData[0].email);
+        const querySnapshot = await getDocs(queryUserInformation);
+        //console.log(querySnapshot);
+        //console.log("user.id" + user.uid);
         if (!querySnapshot.empty) {
+          const userDocRef = querySnapshot.docs[0].ref;
+          //console.log(userDocRef.name);
           setName(user.name);
           setDescription(user.description);
           setImage(user.image);
