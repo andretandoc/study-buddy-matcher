@@ -47,7 +47,7 @@ const Navbar = () => {
             Messages
           </Link>
           <Link to="/accounts" className="navbar-link">
-            Account
+            Profile
           </Link>
         </div>
 

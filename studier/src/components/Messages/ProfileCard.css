@@ -4,8 +4,8 @@
 .ProfileCard {
     position: absolute;
     /* Change to absolute */
-    max-width: 300px;
-    min-width: 300px;
+    /* max-width: 300px;
+    min-width: 300px; */
     height: 600px;
     border: 1px solid #ddd;
     background-color: #fff;
@@ -13,7 +13,26 @@
     border-radius: 8px;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     z-index: 1;
-    /* Add this line */
+    height: 650px;
+    width: 80%;
+    /* Adjusted width for responsiveness */
+    max-width: 600px;
+    /* Maximum width for larger screens */
+}
+
+.ProfileCardInfo p,
+.ProfileCardCourses p,
+.ProfileCardDescription p {
+    /* ... (previous styles) */
+    font-size: 1rem;
+    /* Adjusted font size for better readability */
+}
+
+.ProfileCardHeader h2 {
+    margin: 0;
+    color: #2b2d42;
+    font-size: 1.5rem;
+    /* Increased font size for the name */
 }
 
 .ProfileCard.active {
@@ -21,7 +40,8 @@
     box-shadow: 5px 2px 15px rgba(0, 0, 0, 0.4);
     z-index: 40;
     /* background-color: red; */
-    width: 300px;
+    height: 650px;
+    width: 600px;
 }
 
 .ProfileCardHeader {
@@ -36,6 +56,9 @@
 
 .ProfileCardBody {
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .ProfileCardBody p {
@@ -59,12 +82,17 @@
     width: 100%;
     height: auto;
     border-radius: 8px;
+    max-width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .ProfileCardFooter {
     display: flex;
     justify-content: space-between;
     padding: 20px;
+    margin-top: 10px;
+
 }
 
 .ProfileCardFooter button {
@@ -74,11 +102,13 @@
     border: none;
     border-radius: 5px;
     font-size: 1rem;
+    font-size: 1rem;
     font-weight: bold;
 }
 
 /* Like button */
 .ProfileCardFooter button.like {
+    margin: 10px;
     background-color: #b8f2e6;
     color: #2b2d42;
 }
@@ -86,6 +116,7 @@
 /* Dislike button */
 .ProfileCardFooter button.dislike {
     background-color: #ffa69e;
+    margin: 10px;
     color: #2b2d42;
 }
 

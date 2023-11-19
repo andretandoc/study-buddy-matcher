@@ -7,26 +7,31 @@ const ProfileCard = ({ userData, isActive, onLike, onDislike }) => {
   const {
     name = "",
     pastCourses = [],
-    yearOfStudy = "",
+    yearsOfStudy = "",
     description = "",
     currentCourses = [],
     major = "",
     uid = "",
     image = "",
   } = userData;
-
+  console.log(userData);
   return (
-    <div 
+    <div
       id={`profileCard_${uid}`}
       className={`ProfileCard ${isActive ? "active" : ""}`}
     >
       <div className="ProfileCardHeader">
-        <h3>{name}</h3>
+        <h2>{name}</h2>
       </div>
       <div className="ProfileCardBody">
+        {image && (
+          <div className="ProfileCardImage">
+            <img src={`data:image/png;base64, ${image}`} alt="User" />
+          </div>
+        )}
         <div className="ProfileCardInfo">
           <p>
-            <strong>Year of Study:</strong> {yearOfStudy}
+            <strong>Year:</strong> U{yearsOfStudy}
           </p>
           <p>
             <strong>Major:</strong> {major}
@@ -41,22 +46,15 @@ const ProfileCard = ({ userData, isActive, onLike, onDislike }) => {
           </p>
         </div>
         <div className="ProfileCardDescription">
-          <p>
-            <strong>Description:</strong> {description}
-          </p>
+          <p>{description}</p>
         </div>
-        {image && (
-          <div className="ProfileCardImage">
-            <img src={`data:image/png;base64, ${image}`} alt="User" />
-          </div>
-        )}
       </div>
       <div className="ProfileCardFooter">
         <button className="like" onClick={onLike}>
-          Like
+          Interested!
         </button>
         <button className="dislike" onClick={onDislike}>
-          Dislike
+          Another time...
         </button>
       </div>
     </div>

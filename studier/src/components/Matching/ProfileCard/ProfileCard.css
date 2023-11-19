@@ -1,13 +1,8 @@
 /* ProfileCard.css */
 
-
 .ProfileCard {
   position: absolute;
-  /* Change to absolute */
-  /*max-width: 700px;
-  min-width: 700px;*/
-  height: 60px;
-  width: 1100px;
+  height: auto;
   overflow-x: hidden;
   text-align: center;
   border: 1px solid #ddd;
@@ -16,15 +11,11 @@
   border-radius: 8px;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   z-index: 1;
-  /* Add this line */
 }
 
 .ProfileCard.active {
-  /* transform: translateX(10%) translateY(-0%) scale(1); */
   box-shadow: 5px 2px 15px rgba(0, 0, 0, 0.4);
   z-index: 40;
-  /* background-color: red; */
-  width: 600px;
 }
 
 .ProfileCardHeader {
@@ -32,18 +23,32 @@
   border-bottom: 1px solid #ddd;
 }
 
-.ProfileCardHeader h3 {
+.ProfileCardHeader h2 {
   margin: 0;
   color: #2b2d42;
+  font-size: 1.5rem;
 }
 
 .ProfileCardBody {
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.ProfileCardBody p {
+.ProfileCardImage img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ProfileCardInfo p,
+.ProfileCardCourses p,
+.ProfileCardDescription p {
   margin: 0;
   color: #5e6472;
+  font-size: 1rem;
 }
 
 .ProfileCardInfo {
@@ -55,19 +60,19 @@
 }
 
 .ProfileCardDescription {
-  margin-bottom: 20px;
-}
-
-.ProfileCardImage img {
+  border: 2px solid #2B2D42;
+  text-align: justify;
+  padding: 10px;
+  border-radius: 10px;
+  height: 100px;
   width: 100%;
-  height: auto;
-  border-radius: 8px;
 }
 
 .ProfileCardFooter {
   display: flex;
   justify-content: space-between;
   padding: 20px;
+  margin-top: 10px;
 }
 
 .ProfileCardFooter button {
@@ -80,19 +85,16 @@
   font-weight: bold;
 }
 
-/* Like button */
 .ProfileCardFooter button.like {
   background-color: #b8f2e6;
   color: #2b2d42;
 }
 
-/* Dislike button */
 .ProfileCardFooter button.dislike {
   background-color: #ffa69e;
   color: #2b2d42;
 }
 
-/* Adjust the color of the buttons on hover */
 .ProfileCardFooter button:hover {
   opacity: 0.8;
 }
